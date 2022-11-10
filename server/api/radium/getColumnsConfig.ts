@@ -4,14 +4,16 @@ export default defineEventHandler((event) => {
       name: 'description',
       position: 1,
       width: '300',
-      visible: true,
+      isVisible: true,
+      isMultiple: true,
       subColumns: [],
     },
     {
       name: 'shift',
       position: 0,
       width: '170',
-      visible: true,
+      isVisible: true,
+      isMultiple: true,
       subColumns: [
         { name: 'week', width: '33' },
         { name: 'date', width: '33' },

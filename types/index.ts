@@ -30,7 +30,8 @@ declare global {
     name: string
     position: number
     width: number
-    visible: boolean
+    isVisible: boolean
+    isMultiple: boolean
     subColumns: Array<SubColumn>
   }
 }
