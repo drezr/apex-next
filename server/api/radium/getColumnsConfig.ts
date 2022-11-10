@@ -9,6 +9,14 @@ export default defineEventHandler((event) => {
       subColumns: [],
     },
     {
+      name: 'note',
+      position: 2,
+      width: '300',
+      isVisible: true,
+      isMultiple: false,
+      subColumns: [],
+    },
+    {
       name: 'shift',
       position: 0,
       width: '170',

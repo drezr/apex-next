@@ -6,6 +6,11 @@ const localisation = {
         nl: 'Description',
         en: 'Description',
       },
+      note: {
+        fr: 'Note',
+        nl: 'Note',
+        en: 'Note',
+      },
       schedule: {
         fr: 'Horaire',
         nl: 'Schedule',
