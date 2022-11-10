@@ -17,6 +17,13 @@ export default defineEventHandler((event) => {
           position: 1,
         },
       ],
+      shifts: [
+        {
+          id: 1,
+          date: '01-01-2023',
+          schedule: '08-16',
+        },
+      ],
     },
     {
       id: 2,
@@ -41,6 +48,7 @@ export default defineEventHandler((event) => {
           position: 1,
         },
       ],
+      shifts: [],
     },
   ]
 })

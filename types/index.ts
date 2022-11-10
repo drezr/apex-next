@@ -14,10 +14,17 @@ declare global {
     position: number
   }
 
+  interface WorkShift {
+    id: number
+    date: string
+    schedule: string
+  }
+
   interface Work {
     id: number
     color: string
     rows: Array<WorkRow>
+    shifts: Array<WorkShift>
   }
 
   interface SubColumn {
