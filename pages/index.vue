@@ -36,7 +36,9 @@
 
 <script setup lang="ts">
 let works: Array<Work> = await $fetch('/api/radium/getWorks')
-let columnConfigs: Array<ColumnConfig> = await $fetch('/api/radium/getConfig')
+let columnConfigs: Array<ColumnConfig> = await $fetch(
+  '/api/radium/getColumnsConfig'
+)
 
 columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
