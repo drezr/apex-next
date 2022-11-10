@@ -23,6 +23,7 @@ const profile: Profile = await useProfile().value
 .bar-frame {
   padding: 5px;
   border-bottom: 1px black solid;
+  font-weight: bold;
 }
 .bar-content {
   display: flex;
