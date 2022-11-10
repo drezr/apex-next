@@ -38,6 +38,13 @@ export default defineEventHandler((event) => {
           position: 1,
           color: 'purple',
         },
+        {
+          id: 5,
+          name: 'note',
+          value: 'Work note #1',
+          position: 1,
+          color: 'grey',
+        },
       ],
     },
   ]
