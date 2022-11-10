@@ -12,7 +12,6 @@ declare global {
     name: string
     value: string
     position: number
-    color: string
   }
 
   interface Work {
