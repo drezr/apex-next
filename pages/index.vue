@@ -3,7 +3,7 @@
     <div v-for="work in works" class="work-frame">
       <div
         v-for="columnConfig in columnConfigs"
-        class="work-column"
+        class="work-column-frame"
         :style="`width: ${columnConfig.width}px;`"
       >
         <div class="work-column-title">
@@ -15,19 +15,47 @@
         >
           <div
             v-for="subColumn in columnConfig.subColumns"
-            class="work-column-subtitle"
+            class="work-column-subtitle-cell"
             :style="`width: ${subColumn.width}%;`"
           >
             {{ getLocal(['radium', 'columnTitle', subColumn.name]) }}
           </div>
         </div>
-        <div
-          v-for="row in work.rows.filter(
-            (row) => row.name === columnConfig.name
-          )"
-          class="work-row"
-        >
-          <div v-html="row.value"></div>
+
+        <div v-if="columnConfig.name == 'shift'">
+          <div v-for="shift in work.shifts">
+            <div class="work-shift-frame">
+              <div
+                class="work-shift-cell"
+                :style="`width: ${columnConfig.subColumns[0].width}%;`"
+              >
+                1
+              </div>
+              <div
+                class="work-shift-cell"
+                :style="`width: ${columnConfig.subColumns[1].width}%;`"
+              >
+                {{ dateTools.formatDatetimeNoYear(shift.date) }}
+              </div>
+              <div
+                class="work-shift-cell"
+                :style="`width: ${columnConfig.subColumns[2].width}%;`"
+              >
+                {{ shift.schedule }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else>
+          <div
+            v-for="row in work.rows.filter(
+              (row) => row.name === columnConfig.name
+            )"
+            class="work-row-frame"
+          >
+            <div v-html="row.value"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -52,27 +80,49 @@ columnConfigs.sort(
   width: fit-content;
   margin: 10px;
 }
-.work-column {
-  border: 1px black solid;
+
+.work-column-frame {
+  padding-bottom: 5px;
+}
+
+.work-column-frame:not(:last-child) {
+  border-right: 1px black solid;
 }
 
 .work-column-title {
   text-align: center;
-  border: 1px black solid;
+  border-bottom: 1px black solid;
 }
 
 .work-column-subtitles-frame {
   display: flex;
 }
 
-.work-column-subtitle {
+.work-column-subtitle-cell {
   text-align: center;
-  border: 1px black solid;
   font-size: 12px;
+  border-bottom: 1px black solid;
+}
+.work-column-subtitle-cell:not(:last-child) {
+  border-right: 1px black solid;
 }
 
-.work-row {
+.work-row-frame {
   text-align: center;
-  border: 1px black solid;
+  border-bottom: 1px black solid;
+}
+
+.work-shift-frame {
+  display: flex;
+  font-size: 12px;
+  border-bottom: 1px black solid;
+}
+
+.work-shift-cell {
+  text-align: center;
+}
+
+.work-shift-cell:not(:last-child) {
+  border-right: 1px black solid;
 }
 </style>
