@@ -2,7 +2,7 @@
   <div>
     <div class="bar-frame">
       <div class="bar-content">
-        <div>BAR</div>
+        <div>APEX</div>
         <div>
           {{ profile.name }}
         </div>
