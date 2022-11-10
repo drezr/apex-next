@@ -1,7 +1,7 @@
 class DateTools {
   formatDatetimeNoYear(datetime: DateString) {
     /**
-     * Returns datetime with the following format: DD-MM
+     * Returns datetime with the following format: DD/MM
      *
      * @param {DateString} datetime the date to convert. Expected format 'YYYY-MM-DD'
      */
