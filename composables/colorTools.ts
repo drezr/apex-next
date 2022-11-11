@@ -311,7 +311,7 @@ class ColorTools {
 
   pickBG(color: string, lightness: number = 0) {
     /**
-     * Returns desired color style
+     * Returns desired background-color style
      *
      * @param {string} color the ''0'' color
      * @param {number} lightness the lightness level
