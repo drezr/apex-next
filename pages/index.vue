@@ -37,7 +37,7 @@
                 class="work-shift-cell"
                 :style="`width: ${columnConfig.subColumns[0].width}%;`"
               >
-                1
+                {{ dateTools.getWeek(shift.date) }}
               </div>
               <div
                 class="work-shift-cell"
@@ -90,7 +90,9 @@ function findFirstRow(rows, columnConfig) {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$inner-border-color: rgb(129, 129, 129);
+
 .work-frame {
   border: 1px black solid;
   display: flex;
@@ -103,16 +105,17 @@ function findFirstRow(rows, columnConfig) {
 .work-column-frame {
   display: flex;
   flex-direction: column;
-  padding-bottom: 5px;
 }
 
 .work-column-frame:not(:last-child) {
-  border-right: 1px black solid;
+  border-right: 1px solid;
+  border-color: $inner-border-color;
 }
 
 .work-column-title {
   text-align: center;
-  border-bottom: 1px black solid;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
   font-weight: bold;
   font-size: 12px;
 }
@@ -124,16 +127,19 @@ function findFirstRow(rows, columnConfig) {
 .work-column-subtitle-cell {
   text-align: center;
   font-size: 11px;
-  border-bottom: 1px black solid;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
   font-weight: bold;
 }
 .work-column-subtitle-cell:not(:last-child) {
-  border-right: 1px black solid;
+  border-right: 1px solid;
+  border-color: $inner-border-color;
 }
 
 .work-row-frame-multiple {
   text-align: center;
-  border-bottom: 1px black solid;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
 }
 
 .work-row-frame-single {
@@ -146,7 +152,8 @@ function findFirstRow(rows, columnConfig) {
 .work-shift-frame {
   display: flex;
   font-size: 14px;
-  border-bottom: 1px black solid;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
 }
 
 .work-shift-cell {
@@ -154,6 +161,7 @@ function findFirstRow(rows, columnConfig) {
 }
 
 .work-shift-cell:not(:last-child) {
-  border-right: 1px black solid;
+  border-right: 1px solid;
+  border-color: $inner-border-color;
 }
 </style>

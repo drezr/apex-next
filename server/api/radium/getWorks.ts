@@ -51,7 +51,7 @@ export default defineEventHandler((event) => {
           id: 5,
           name: 'note',
           value: 'Work note #1',
-          color: null,
+          color: 'red',
           position: 1,
         },
       ],
