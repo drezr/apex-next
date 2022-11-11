@@ -20,6 +20,7 @@ declare global {
     id: number
     name: string
     value: string
+    color: string
     position: number
   }
 
@@ -27,6 +28,7 @@ declare global {
     id: number
     date: DateString
     schedule: string
+    color: string
     position: number
   }
 

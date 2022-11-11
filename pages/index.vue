@@ -1,17 +1,25 @@
 <template>
   <div>
-    <div v-for="work in works" class="work-frame">
+    <div
+      v-for="work in works"
+      class="work-frame"
+      :style="`background-color: ${colorTools.pick(work.color, 4)};`"
+    >
       <div
         v-for="columnConfig in columnConfigs"
         class="work-column-frame"
         :style="`width: ${columnConfig.width}px;`"
       >
-        <div class="work-column-title">
+        <div
+          class="work-column-title"
+          :style="`background-color: ${colorTools.pick(work.color, 2)};`"
+        >
           {{ getLocal(['radium', 'columnTitle', columnConfig.name]) }}
         </div>
         <div
           class="work-column-subtitles-frame"
           v-if="columnConfig.subColumns.length > 0"
+          :style="`background-color: ${colorTools.pick(work.color, 3)};`"
         >
           <div
             v-for="subColumn in columnConfig.subColumns"
@@ -47,12 +55,15 @@
           </div>
         </div>
 
-        <div v-else>
+        <div v-else style="flex-grow: 1">
           <div
             v-for="row in work.rows.filter(
               (row) => row.name === columnConfig.name
             )"
-            class="work-row-frame"
+            :class="`work-row-frame-${
+              columnConfig.isMultiple ? 'multiple' : 'single'
+            }`"
+            :style="`background-color: ${colorTools.pick(row.color, 4)};`"
           >
             <div v-html="row.value"></div>
           </div>
@@ -71,6 +82,12 @@ let columnConfigs: Array<ColumnConfig> = await $fetch(
 columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
 )
+
+function findFirstRow(rows, columnConfig) {
+  const firstRow = rows.find((row) => row.name === columnConfig.name)
+
+  return firstRow ? firstRow.value : ''
+}
 </script>
 
 <style scoped>
@@ -79,9 +96,13 @@ columnConfigs.sort(
   display: flex;
   width: fit-content;
   margin: 10px;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .work-column-frame {
+  display: flex;
+  flex-direction: column;
   padding-bottom: 5px;
 }
 
@@ -92,6 +113,8 @@ columnConfigs.sort(
 .work-column-title {
   text-align: center;
   border-bottom: 1px black solid;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .work-column-subtitles-frame {
@@ -100,21 +123,29 @@ columnConfigs.sort(
 
 .work-column-subtitle-cell {
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   border-bottom: 1px black solid;
+  font-weight: bold;
 }
 .work-column-subtitle-cell:not(:last-child) {
   border-right: 1px black solid;
 }
 
-.work-row-frame {
+.work-row-frame-multiple {
   text-align: center;
   border-bottom: 1px black solid;
 }
 
+.work-row-frame-single {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .work-shift-frame {
   display: flex;
-  font-size: 12px;
+  font-size: 14px;
   border-bottom: 1px black solid;
 }
 
