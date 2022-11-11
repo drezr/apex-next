@@ -63,7 +63,7 @@
             :class="`work-row-frame-${
               columnConfig.isMultiple ? 'multiple' : 'single'
             }`"
-            :style="colorTools.pickBG(work.color, 4)"
+            :style="colorTools.pickBG(row.color, 4)"
           >
             <div v-html="row.value"></div>
           </div>
