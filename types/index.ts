@@ -50,6 +50,9 @@ declare global {
     width: number
     isVisible: boolean
     isMultiple: boolean
+    isClickable: boolean
+    clickAction: string
+    clickValue: string
     subColumns: Array<SubColumn>
   }
 }

@@ -11,6 +11,11 @@ const localisation = {
         nl: 'Note',
         en: 'Note',
       },
+      colt: {
+        fr: 'CoLT',
+        nl: 'CoLT',
+        en: 'CoLT',
+      },
       schedule: {
         fr: 'Horaire',
         nl: 'Schedule',

@@ -60,10 +60,16 @@
             v-for="row in work.rows.filter(
               (row) => row.name === columnConfig.name
             )"
-            :class="`work-row-frame-${
-              columnConfig.isMultiple ? 'multiple' : 'single'
-            }`"
+            :class="[
+              `work-row-frame-${
+                columnConfig.isMultiple ? 'multiple' : 'single'
+              }`,
+              columnConfig.isClickable ? 'work-row-frame-clickable' : '',
+            ]"
             :style="colorTools.pickBG(row.color, 4)"
+            @click="
+              columnConfig.isClickable && onColumnClick(columnConfig, row)
+            "
           >
             <div v-html="row.value"></div>
           </div>
@@ -83,10 +89,16 @@ columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
 )
 
-function findFirstRow(rows, columnConfig) {
-  const firstRow = rows.find((row) => row.name === columnConfig.name)
+// function findFirstRow(rows: Array<WorkRow>, columnConfig: ColumnConfig) {
+//   const firstRow = rows.find((row) => row.name === columnConfig.name)
 
-  return firstRow ? firstRow.value : ''
+//   return firstRow ? firstRow.value : ''
+// }
+
+function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
+  if (columnConfig.clickAction == 'url') {
+    window.open(columnConfig.clickValue + row.value, '_blank')
+  }
 }
 </script>
 
@@ -147,6 +159,15 @@ $inner-border-color: rgb(129, 129, 129);
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.work-row-frame-clickable {
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.work-row-frame-clickable:hover {
+  filter: brightness(1.1);
 }
 
 .work-shift-frame {

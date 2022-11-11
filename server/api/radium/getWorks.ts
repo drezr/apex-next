@@ -18,6 +18,20 @@ export default defineEventHandler((event) => {
           color: 'green',
           position: 1,
         },
+        {
+          id: 3,
+          name: 'note',
+          value: 'Work note #1',
+          color: 'red',
+          position: 1,
+        },
+        {
+          id: 4,
+          name: 'colt',
+          value: '6953',
+          color: 'blue',
+          position: 1,
+        },
       ],
       shifts: [
         {
@@ -28,34 +42,6 @@ export default defineEventHandler((event) => {
           position: 0,
         },
       ],
-    },
-    {
-      id: 2,
-      color: 'purple',
-      rows: [
-        {
-          id: 3,
-          name: 'description',
-          value: 'Work description #3',
-          color: null,
-          position: 0,
-        },
-        {
-          id: 4,
-          name: 'description',
-          value: 'Work description #4',
-          color: null,
-          position: 1,
-        },
-        {
-          id: 5,
-          name: 'note',
-          value: 'Work note #1',
-          color: 'red',
-          position: 1,
-        },
-      ],
-      shifts: [],
     },
   ]
 })
