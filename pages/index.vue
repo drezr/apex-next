@@ -3,7 +3,7 @@
     <div
       v-for="work in works"
       class="work-frame"
-      :style="`background-color: ${colorTools.pick(work.color, 4)};`"
+      :style="colorTools.pickBG(work.color, 4)"
     >
       <div
         v-for="columnConfig in columnConfigs"
@@ -12,14 +12,14 @@
       >
         <div
           class="work-column-title"
-          :style="`background-color: ${colorTools.pick(work.color, 2)};`"
+          :style="colorTools.pickBG(work.color, 2)"
         >
           {{ getLocal(['radium', 'columnTitle', columnConfig.name]) }}
         </div>
         <div
           class="work-column-subtitles-frame"
           v-if="columnConfig.subColumns.length > 0"
-          :style="`background-color: ${colorTools.pick(work.color, 3)};`"
+          :style="colorTools.pickBG(work.color, 3)"
         >
           <div
             v-for="subColumn in columnConfig.subColumns"
@@ -63,7 +63,7 @@
             :class="`work-row-frame-${
               columnConfig.isMultiple ? 'multiple' : 'single'
             }`"
-            :style="`background-color: ${colorTools.pick(row.color, 4)};`"
+            :style="colorTools.pickBG(work.color, 4)"
           >
             <div v-html="row.value"></div>
           </div>

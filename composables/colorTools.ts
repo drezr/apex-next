@@ -302,11 +302,22 @@ class ColorTools {
     /**
      * Returns desired color with lightness adjustement
      *
-     * @param {string} color the ''0'' color
+     * @param {string} color the desired color
      * @param {number} lightness the lightness level
      */
 
     return color ? `${this.colors[color][lightness]}` : ''
+  }
+
+  pickBG(color: string, lightness: number = 0) {
+    /**
+     * Returns desired color with lightness adjustement
+     *
+     * @param {string} color the ''0'' color
+     * @param {number} lightness the lightness level
+     */
+
+    return color ? `background-color: ${this.pick(color, lightness)};` : ''
   }
 }
 
