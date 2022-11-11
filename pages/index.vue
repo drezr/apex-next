@@ -15,6 +15,11 @@
           :style="colorTools.pickBG(work.color, 2)"
         >
           {{ getLocal(['radium', 'columnTitle', columnConfig.name]) }}
+          <span
+            v-if="columnConfig.isClickable && columnConfig.clickAction == 'url'"
+            v-html="getIcon('box-arrow-up-right', 'black', 10)"
+            style="position: relative; top: -2px"
+          ></span>
         </div>
         <div
           class="work-column-subtitles-frame"
