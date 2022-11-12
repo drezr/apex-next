@@ -91,12 +91,6 @@ columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
 )
 
-// function findFirstRow(rows: Array<WorkRow>, columnConfig: ColumnConfig) {
-//   const firstRow = rows.find((row) => row.name === columnConfig.name)
-
-//   return firstRow ? firstRow.value : ''
-// }
-
 function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
   if (columnConfig.clickAction == 'url') {
     window.open(columnConfig.clickValue + row.value, '_blank')
