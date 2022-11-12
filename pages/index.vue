@@ -3,35 +3,32 @@
     <div
       v-for="work in works"
       class="work-frame"
-      :style="colorTools.pickBG(work.color, 4)"
+      :style="_color.pickBG(work.color, 4)"
     >
       <div
         v-for="columnConfig in columnConfigs"
         class="work-column-frame"
         :style="`width: ${columnConfig.width}px;`"
       >
-        <div
-          class="work-column-title"
-          :style="colorTools.pickBG(work.color, 2)"
-        >
-          {{ getLocal(['radium', 'columnTitle', columnConfig.name]) }}
+        <div class="work-column-title" :style="_color.pickBG(work.color, 2)">
+          {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
           <span
             v-if="columnConfig.isClickable && columnConfig.clickAction == 'url'"
-            v-html="getIcon('box-arrow-up-right', 'black', 10)"
+            v-html="_icon('box-arrow-up-right', 'black', 10)"
             style="position: relative; top: -2px"
           ></span>
         </div>
         <div
           class="work-column-subtitles-frame"
           v-if="columnConfig.subColumns.length > 0"
-          :style="colorTools.pickBG(work.color, 3)"
+          :style="_color.pickBG(work.color, 3)"
         >
           <div
             v-for="subColumn in columnConfig.subColumns"
             class="work-column-subtitle-cell"
             :style="`width: ${subColumn.width}%;`"
           >
-            {{ getLocal(['radium', 'columnTitle', subColumn.name]) }}
+            {{ _local(['radium', 'columnTitle', subColumn.name]) }}
           </div>
         </div>
 
@@ -42,13 +39,13 @@
                 class="work-shift-cell"
                 :style="`width: ${columnConfig.subColumns[0].width}%;`"
               >
-                {{ dateTools.getWeek(shift.date) }}
+                {{ _date.getWeek(shift.date) }}
               </div>
               <div
                 class="work-shift-cell"
                 :style="`width: ${columnConfig.subColumns[1].width}%;`"
               >
-                {{ dateTools.formatDatetimeNoYear(shift.date) }}
+                {{ _date.formatDatetimeNoYear(shift.date) }}
               </div>
               <div
                 class="work-shift-cell"
@@ -71,7 +68,7 @@
               }`,
               columnConfig.isClickable ? 'work-row-frame-clickable' : '',
             ]"
-            :style="colorTools.pickBG(row.color, 4)"
+            :style="_color.pickBG(row.color, 4)"
             @click="
               columnConfig.isClickable && onColumnClick(columnConfig, row)
             "

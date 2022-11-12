@@ -40,7 +40,7 @@ const localisation = {
   },
 }
 
-export const getLocal = (hierarchy: Array<any>) => {
+export const getLocal = (hierarchy: Array<string>) => {
   const profile: Profile = useState<Profile>('profile').value
   const chosenLanguage = profile.chosenLanguage
   let target = localisation

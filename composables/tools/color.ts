@@ -1,4 +1,4 @@
-class ColorTools {
+export default class ColorTools {
   colors: Object
 
   constructor() {
@@ -320,5 +320,3 @@ class ColorTools {
     return color ? `background-color: ${this.pick(color, lightness)};` : ''
   }
 }
-
-export default new ColorTools()

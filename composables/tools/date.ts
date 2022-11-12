@@ -1,4 +1,4 @@
-class DateTools {
+export default class DateTools {
   formatDatetimeNoYear(datetime: DateString) {
     /**
      * Returns datetime with the following format: DD/MM
@@ -30,5 +30,3 @@ class DateTools {
     )
   }
 }
-
-export default new DateTools()
