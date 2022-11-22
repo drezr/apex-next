@@ -44,7 +44,10 @@
 
         <div v-if="columnConfig.name == 'shift'">
           <div v-for="shift in work.shifts">
-            <div class="work-shift-frame">
+            <div
+              class="work-shift-frame"
+              :style="_color.pickBG(shift.color, 4)"
+            >
               <div
                 class="work-shift-cell"
                 :style="`width: ${columnConfig.subColumns[0].width}%;`"
@@ -89,6 +92,8 @@
       </div>
     </div>
 
+    <!-- Detail Modal -->
+
     <div
       class="modal fade"
       id="detailModal"
@@ -96,12 +101,20 @@
       aria-labelledby="detailModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-scrollable modal-xl">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="detailModalLabel">
               {{ _local(['radium', 'detailModal', 'title']) }}
             </h1>
+
+            <button type="button" class="btn btn-success">
+              <span
+                v-html="_icon('save', 'white', 15)"
+                style="position: relative; top: -1px; margin-right: 5px"
+              ></span>
+              {{ _local(['common', 'save']) }}
+            </button>
           </div>
 
           <div class="work-modal-nav">
@@ -149,28 +162,48 @@
                 tabindex="0"
               >
                 <div v-for="columnConfig in columnConfigs" class="mb-3">
-                  <label class="form-label" style="font-weight: bold">
+                  <label
+                    class="form-label"
+                    style="font-weight: bold; font-size: 18px"
+                  >
                     {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
                   </label>
 
                   <div v-if="columnConfig.name == 'shift'">
-                    <div v-for="shift in selectedWork.shifts" class="d-flex">
+                    <div
+                      v-for="shift in selectedWork.shifts"
+                      class="d-flex"
+                      style="align-items: center"
+                    >
                       <span
                         v-if="columnConfig.isMultiple"
                         v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
-                        class="word-modal-drag"
+                        class="work-modal-drag"
                       ></span>
+
                       <input
                         class="form-control mb-1"
                         :value="_date.getWeek(shift.date)"
                         disabled
                       />
-                      <div class="form-control mb-1 mx-1 work-modal-date">
+
+                      <div
+                        class="form-control mb-1 mx-1 work-modal-date"
+                        :style="_color.pickBG(shift.color, 5)"
+                      >
                         {{ _date.formatDatetimeNoYear(shift.date) }}
                       </div>
+
                       <input
                         class="form-control mb-1"
                         :value="shift.schedule"
+                        :style="_color.pickBG(shift.color, 5)"
+                      />
+
+                      <RadiumColorPicker
+                        :row="shift"
+                        class="mx-2"
+                        style="position: relative; top: -2px"
                       />
                     </div>
                   </div>
@@ -181,17 +214,26 @@
                         (row) => row.name === columnConfig.name
                       )"
                       class="d-flex"
+                      style="align-items: center"
                     >
                       <span
                         v-if="columnConfig.isMultiple"
                         v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
-                        class="word-modal-drag"
+                        class="work-modal-drag"
                       ></span>
+
                       <div
                         class="form-control mb-2"
                         contenteditable="true"
                         v-html="row.value"
+                        :style="_color.pickBG(row.color, 5)"
                       ></div>
+
+                      <RadiumColorPicker
+                        :row="row"
+                        class="mx-2"
+                        style="position: relative; top: -2px"
+                      />
                     </div>
                   </div>
 
@@ -200,6 +242,7 @@
                       v-if="columnConfig.isMultiple"
                       type="button"
                       class="btn btn-success btn-sm"
+                      style="padding: 0"
                     >
                       <span
                         v-html="_icon('plus', 'white', 20)"
@@ -228,159 +271,166 @@
 </template>
 
 <script setup lang="ts">
-  import { workerData } from 'worker_threads'
+import { workerData } from 'worker_threads'
 
-  let works: Array<Work> = await $fetch('/api/radium/getWorks')
-  let columnConfigs: Array<ColumnConfig> = await $fetch(
-    '/api/radium/getColumnsConfig'
-  )
+let works: Array<Work> = await $fetch('/api/radium/getWorks')
+let columnConfigs: Array<ColumnConfig> = await $fetch(
+  '/api/radium/getColumnsConfig'
+)
 
-  let selectedWork = ref(null)
+let selectedWork = ref(null)
 
-  columnConfigs.sort(
-    (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
-  )
+columnConfigs.sort(
+  (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
+)
 
-  function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
-    if (columnConfig.clickAction == 'url') {
-      window.open(columnConfig.clickValue + row.value, '_blank')
-    }
+function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
+  if (columnConfig.clickAction == 'url') {
+    window.open(columnConfig.clickValue + row.value, '_blank')
   }
+}
 
-  function openDetailModal(work) {
-    selectedWork.value = work
-  }
+function openDetailModal(work) {
+  selectedWork.value = work
+}
 </script>
 
 <style lang="scss" scoped>
-  $inner-border-color: rgb(129, 129, 129);
+$inner-border-color: rgb(129, 129, 129);
 
-  .work-frame {
-    border: 1px black solid;
-    display: flex;
-    width: fit-content;
-    margin: 10px;
-    border-radius: 5px;
-    overflow: hidden;
-  }
+.work-frame {
+  border: 1px black solid;
+  display: flex;
+  width: fit-content;
+  margin: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
 
-  .work-column-frame {
-    display: flex;
-    flex-direction: column;
-  }
+.work-column-frame {
+  display: flex;
+  flex-direction: column;
+}
 
-  .work-column-frame:not(:last-child) {
-    border-right: 1px solid;
-    border-color: $inner-border-color;
-  }
+.work-column-frame:not(:last-child) {
+  border-right: 1px solid;
+  border-color: $inner-border-color;
+}
 
-  .work-column-title {
-    text-align: center;
-    border-bottom: 1px solid;
-    border-color: $inner-border-color;
-    font-weight: bold;
-    font-size: 12px;
-  }
+.work-column-title {
+  text-align: center;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
+  font-weight: bold;
+  font-size: 12px;
+}
 
-  .work-column-subtitles-frame {
-    display: flex;
-  }
+.work-column-subtitles-frame {
+  display: flex;
+}
 
-  .work-column-subtitle-cell {
-    text-align: center;
-    font-size: 11px;
-    border-bottom: 1px solid;
-    border-color: $inner-border-color;
-    font-weight: bold;
-  }
-  .work-column-subtitle-cell:not(:last-child) {
-    border-right: 1px solid;
-    border-color: $inner-border-color;
-  }
+.work-column-subtitle-cell {
+  text-align: center;
+  font-size: 11px;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
+  font-weight: bold;
+}
+.work-column-subtitle-cell:not(:last-child) {
+  border-right: 1px solid;
+  border-color: $inner-border-color;
+}
 
-  .work-row-frame-multiple {
-    text-align: center;
-    border-bottom: 1px solid;
-    border-color: $inner-border-color;
-  }
+.work-row-frame-multiple {
+  text-align: center;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
+}
 
-  .work-row-frame-single {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
+.work-row-frame-single {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
-  .work-row-frame-clickable {
-    cursor: pointer;
-    transition: filter 0.2s;
-  }
+.work-row-frame-clickable {
+  cursor: pointer;
+  transition: filter 0.2s;
+}
 
-  .work-row-frame-clickable:hover {
-    filter: brightness(1.1);
-  }
+.work-row-frame-clickable:hover {
+  filter: brightness(1.1);
+}
 
-  .work-shift-frame {
-    display: flex;
-    font-size: 14px;
-    border-bottom: 1px solid;
-    border-color: $inner-border-color;
-  }
+.work-shift-frame {
+  display: flex;
+  font-size: 14px;
+  border-bottom: 1px solid;
+  border-color: $inner-border-color;
+}
 
-  .work-shift-cell {
-    text-align: center;
-  }
+.work-shift-cell {
+  text-align: center;
+}
 
-  .work-shift-cell:not(:last-child) {
-    border-right: 1px solid;
-    border-color: $inner-border-color;
-  }
+.work-shift-cell:not(:last-child) {
+  border-right: 1px solid;
+  border-color: $inner-border-color;
+}
 
-  .work-expand-button {
-    border-right: 1px solid;
-    border-color: $inner-border-color;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    min-height: 100%;
-    cursor: pointer;
-  }
+.work-expand-button {
+  border-right: 1px solid;
+  border-color: $inner-border-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  min-height: 100%;
+  cursor: pointer;
+}
 
-  .work-expand-button:hover {
-    filter: brightness(1.1);
-  }
+.work-expand-button:hover {
+  filter: brightness(1.1);
+}
 
-  .work-modal-nav {
-    padding: 10px;
-    border-bottom: 1px solid var(--bs-modal-header-border-color);
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
-  }
+.work-modal-nav {
+  padding: 10px;
+  border-bottom: 1px solid var(--bs-modal-header-border-color);
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
 
-  .work-modal-date {
-    cursor: pointer;
-  }
+.work-modal-date {
+  cursor: pointer;
+}
 
-  .work-modal-date:hover {
-    background-color: rgb(250, 250, 250);
-  }
+.work-modal-date:hover {
+  background-color: rgb(250, 250, 250);
+}
 
-  .word-modal-drag {
-    position: relative;
-    top: 5px;
-    margin-right: 10px;
-    cursor: grab;
-  }
+.work-modal-drag {
+  position: relative;
+  top: -4px;
+  margin-right: 10px;
+  cursor: grab;
+}
 
-  .word-modal-drag:active {
-    cursor: grabbing;
-  }
+.work-modal-drag:active {
+  cursor: grabbing;
+}
 
-  .modal.fade .modal-dialog {
-    transition: transform 0.05s ease-out;
-  }
+.modal-header {
+  padding: 5px 5px 5px 15px;
+}
+.work-modal-nav {
+  padding: 5px;
+}
 
-  .fade {
-    transition: opacity 0.05s ease-out;
-  }
+.modal.fade .modal-dialog {
+  transition: transform 0.05s ease-out;
+}
+
+.fade {
+  transition: opacity 0.05s ease-out;
+}
 </style>

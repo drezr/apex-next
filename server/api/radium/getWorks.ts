@@ -38,7 +38,7 @@ export default defineEventHandler((event) => {
           id: 1,
           date: '2023-01-01',
           schedule: '08-16',
-          color: null,
+          color: 'blue',
           position: 0,
         },
       ],

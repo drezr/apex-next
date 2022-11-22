@@ -1,4 +1,11 @@
 const localisation = {
+  common: {
+    save: {
+      fr: 'Enregistrer',
+      nl: 'Enregistrer',
+      en: 'Enregistrer',
+    },
+  },
   radium: {
     detailModal: {
       title: {
