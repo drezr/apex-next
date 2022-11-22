@@ -194,152 +194,150 @@
 </template>
 
 <script setup lang="ts">
-import { workerData } from 'worker_threads'
+  import { workerData } from 'worker_threads'
 
-let works: Array<Work> = await $fetch('/api/radium/getWorks')
-let columnConfigs: Array<ColumnConfig> = await $fetch(
-  '/api/radium/getColumnsConfig'
-)
+  let works: Array<Work> = await $fetch('/api/radium/getWorks')
+  let columnConfigs: Array<ColumnConfig> = await $fetch(
+    '/api/radium/getColumnsConfig'
+  )
 
-works = reactive(works)
-columnConfigs = reactive(columnConfigs)
+  works = reactive(works)
+  columnConfigs = reactive(columnConfigs)
 
-let selectedWork = ref(null)
+  let selectedWork = ref(null)
 
-columnConfigs.sort(
-  (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
-)
+  columnConfigs.sort(
+    (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
+  )
 
-function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
-  if (columnConfig.clickAction == 'url') {
-    window.open(columnConfig.clickValue + row.value, '_blank')
+  function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
+    if (columnConfig.clickAction == 'url') {
+      window.open(columnConfig.clickValue + row.value, '_blank')
+    }
   }
-}
 
-function openDetailModal(work) {
-  selectedWork.value = work
-}
+  function openDetailModal(work) {
+    selectedWork.value = work
+  }
 
-function updateRowValue(e, row) {
-  let work = works.find((w) => selectedWork.value.id === w.id)
-  console.log(work)
-  let targetRow = work.rows.find((r) => row.id === r.id)
-  console.log(targetRow)
+  function updateRowValue(e, row) {
+    let work = works.find((w) => selectedWork.value.id === w.id)
+    let targetRow = work.rows.find((r) => row.id === r.id)
 
-  targetRow.value = e.target.innerText
-}
+    targetRow.value = e.target.innerText
+  }
 </script>
 
 <style lang="scss" scoped>
-$inner-border-color: rgb(129, 129, 129);
+  $inner-border-color: rgb(129, 129, 129);
 
-.work-frame {
-  border: 1px black solid;
-  display: flex;
-  width: fit-content;
-  margin: 10px;
-  border-radius: 5px;
-  overflow: hidden;
-}
+  .work-frame {
+    border: 1px black solid;
+    display: flex;
+    width: fit-content;
+    margin: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
 
-.work-column-frame {
-  display: flex;
-  flex-direction: column;
-}
+  .work-column-frame {
+    display: flex;
+    flex-direction: column;
+  }
 
-.work-column-frame:not(:last-child) {
-  border-right: 1px solid;
-  border-color: $inner-border-color;
-}
+  .work-column-frame:not(:last-child) {
+    border-right: 1px solid;
+    border-color: $inner-border-color;
+  }
 
-.work-column-title {
-  text-align: center;
-  border-bottom: 1px solid;
-  border-color: $inner-border-color;
-  font-weight: bold;
-  font-size: 12px;
-}
+  .work-column-title {
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: $inner-border-color;
+    font-weight: bold;
+    font-size: 12px;
+  }
 
-.work-column-subtitles-frame {
-  display: flex;
-}
+  .work-column-subtitles-frame {
+    display: flex;
+  }
 
-.work-column-subtitle-cell {
-  text-align: center;
-  font-size: 11px;
-  border-bottom: 1px solid;
-  border-color: $inner-border-color;
-  font-weight: bold;
-}
-.work-column-subtitle-cell:not(:last-child) {
-  border-right: 1px solid;
-  border-color: $inner-border-color;
-}
+  .work-column-subtitle-cell {
+    text-align: center;
+    font-size: 11px;
+    border-bottom: 1px solid;
+    border-color: $inner-border-color;
+    font-weight: bold;
+  }
+  .work-column-subtitle-cell:not(:last-child) {
+    border-right: 1px solid;
+    border-color: $inner-border-color;
+  }
 
-.work-row-frame-multiple {
-  text-align: center;
-  border-bottom: 1px solid;
-  border-color: $inner-border-color;
-}
+  .work-row-frame-multiple {
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: $inner-border-color;
+  }
 
-.work-row-frame-single {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
+  .work-row-frame-single {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 
-.work-row-frame-clickable {
-  cursor: pointer;
-  transition: filter 0.2s;
-}
+  .work-row-frame-clickable {
+    cursor: pointer;
+    transition: filter 0.2s;
+  }
 
-.work-row-frame-clickable:hover {
-  filter: brightness(1.1);
-}
+  .work-row-frame-clickable:hover {
+    filter: brightness(1.1);
+  }
 
-.work-shift-frame {
-  display: flex;
-  font-size: 14px;
-  border-bottom: 1px solid;
-  border-color: $inner-border-color;
-}
+  .work-shift-frame {
+    display: flex;
+    font-size: 14px;
+    border-bottom: 1px solid;
+    border-color: $inner-border-color;
+  }
 
-.work-shift-cell {
-  text-align: center;
-}
+  .work-shift-cell {
+    text-align: center;
+  }
 
-.work-shift-cell:not(:last-child) {
-  border-right: 1px solid;
-  border-color: $inner-border-color;
-}
+  .work-shift-cell:not(:last-child) {
+    border-right: 1px solid;
+    border-color: $inner-border-color;
+  }
 
-.work-expand-button {
-  border-right: 1px solid;
-  border-color: $inner-border-color;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  min-height: 100%;
-  cursor: pointer;
-}
+  .work-expand-button {
+    border-right: 1px solid;
+    border-color: $inner-border-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    min-height: 100%;
+    cursor: pointer;
+  }
 
-.work-expand-button:hover {
-  filter: brightness(1.1);
-}
+  .work-expand-button:hover {
+    filter: brightness(1.1);
+  }
 
-.work-modal-nav {
-  padding: 10px;
-  border-bottom: 1px solid var(--bs-modal-header-border-color);
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
-}
+  .work-modal-nav {
+    padding: 10px;
+    border-bottom: 1px solid var(--bs-modal-header-border-color);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+  }
 
-.modal.fade .modal-dialog {
-  transition: transform 0.05s ease-out;
-}
+  .modal.fade .modal-dialog {
+    transition: transform 0.05s ease-out;
+  }
 
-.fade {
-  transition: opacity 0.05s ease-out;
-}
+  .fade {
+    transition: opacity 0.05s ease-out;
+  }
 </style>
