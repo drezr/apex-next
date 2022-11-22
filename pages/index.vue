@@ -149,29 +149,63 @@
                 tabindex="0"
               >
                 <div v-for="columnConfig in columnConfigs" class="mb-3">
+                  <label class="form-label" style="font-weight: bold">
+                    {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
+                  </label>
+
                   <div v-if="columnConfig.name == 'shift'">
-                    <label class="form-label" style="font-weight: bold">
-                      {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
-                    </label>
-                    <div v-for="shift in selectedWork.shifts"></div>
+                    <div v-for="shift in selectedWork.shifts" class="d-flex">
+                      <span
+                        v-if="columnConfig.isMultiple"
+                        v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
+                        class="word-modal-drag"
+                      ></span>
+                      <input
+                        class="form-control mb-1"
+                        :value="_date.getWeek(shift.date)"
+                        disabled
+                      />
+                      <div class="form-control mb-1 mx-1 work-modal-date">
+                        {{ _date.formatDatetimeNoYear(shift.date) }}
+                      </div>
+                      <input
+                        class="form-control mb-1"
+                        :value="shift.schedule"
+                      />
+                    </div>
                   </div>
 
                   <div v-else>
-                    <label class="form-label" style="font-weight: bold">
-                      {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
-                    </label>
                     <div
                       v-for="row in selectedWork.rows.filter(
                         (row) => row.name === columnConfig.name
                       )"
+                      class="d-flex"
                     >
+                      <span
+                        v-if="columnConfig.isMultiple"
+                        v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
+                        class="word-modal-drag"
+                      ></span>
                       <div
-                        class="form-control mb-1"
+                        class="form-control mb-2"
                         contenteditable="true"
                         v-html="row.value"
-                        @input="updateRowValue($event, row)"
                       ></div>
                     </div>
+                  </div>
+
+                  <div class="d-grid">
+                    <button
+                      v-if="columnConfig.isMultiple"
+                      type="button"
+                      class="btn btn-success btn-sm"
+                    >
+                      <span
+                        v-html="_icon('plus', 'white', 20)"
+                        style="position: relative; top: -2px"
+                      ></span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -201,9 +235,6 @@
     '/api/radium/getColumnsConfig'
   )
 
-  works = reactive(works)
-  columnConfigs = reactive(columnConfigs)
-
   let selectedWork = ref(null)
 
   columnConfigs.sort(
@@ -218,13 +249,6 @@
 
   function openDetailModal(work) {
     selectedWork.value = work
-  }
-
-  function updateRowValue(e, row) {
-    let work = works.find((w) => selectedWork.value.id === w.id)
-    let targetRow = work.rows.find((r) => row.id === r.id)
-
-    targetRow.value = e.target.innerHTML
   }
 </script>
 
@@ -331,6 +355,25 @@
     padding: 10px;
     border-bottom: 1px solid var(--bs-modal-header-border-color);
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .work-modal-date {
+    cursor: pointer;
+  }
+
+  .work-modal-date:hover {
+    background-color: rgb(250, 250, 250);
+  }
+
+  .word-modal-drag {
+    position: relative;
+    top: 5px;
+    margin-right: 10px;
+    cursor: grab;
+  }
+
+  .word-modal-drag:active {
+    cursor: grabbing;
   }
 
   .modal.fade .modal-dialog {
