@@ -224,6 +224,8 @@
     let work = works.find((w) => selectedWork.value.id === w.id)
     let targetRow = work.rows.find((r) => row.id === r.id)
 
+    console.log(e)
+
     targetRow.value = e.target.innerText
   }
 </script>
