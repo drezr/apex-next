@@ -1,5 +1,12 @@
 const localisation = {
   radium: {
+    detailModal: {
+      title: {
+        fr: 'Modifier le chantier',
+        nl: 'Modifier le chantier',
+        en: 'Modifier le chantier',
+      },
+    },
     columnTitle: {
       description: {
         fr: 'Description',
