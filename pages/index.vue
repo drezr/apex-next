@@ -161,6 +161,28 @@
                 aria-labelledby="nav-home-tab"
                 tabindex="0"
               >
+                <div class="d-flex justify-content-end">
+                  <span
+                    style="
+                      font-weight: bold;
+                      position: relative;
+                      top: 7px;
+                      left: -5px;
+                    "
+                  >
+                    {{ _local(['radium', 'detailModal', 'workColor']) }}
+                  </span>
+
+                  <RadiumColorPicker
+                    v-if="selectedWork"
+                    :parent="selectedWork"
+                    class="mx-2"
+                    :top="-20"
+                    :left="-105"
+                    style="position: relative; top: 10px"
+                  />
+                </div>
+
                 <div v-for="columnConfig in columnConfigs" class="mb-3">
                   <label
                     class="form-label"
@@ -201,8 +223,10 @@
                       />
 
                       <RadiumColorPicker
-                        :row="shift"
+                        :parent="shift"
                         class="mx-2"
+                        :top="-45"
+                        :left="-105"
                         style="position: relative; top: -2px"
                       />
                     </div>
@@ -230,8 +254,10 @@
                       ></div>
 
                       <RadiumColorPicker
-                        :row="row"
+                        :parent="row"
                         class="mx-2"
+                        :top="-45"
+                        :left="-105"
                         style="position: relative; top: -2px"
                       />
                     </div>
@@ -271,12 +297,13 @@
 </template>
 
 <script setup lang="ts">
-import { workerData } from 'worker_threads'
-
 let works: Array<Work> = await $fetch('/api/radium/getWorks')
 let columnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'
 )
+
+works = reactive(works)
+columnConfigs = reactive(columnConfigs)
 
 let selectedWork = ref(null)
 

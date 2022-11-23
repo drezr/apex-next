@@ -13,6 +13,11 @@ const localisation = {
         nl: 'Modifier le chantier',
         en: 'Modifier le chantier',
       },
+      workColor: {
+        fr: 'Couleur du chantier',
+        nl: 'Couleur du chantier',
+        en: 'Couleur du chantier',
+      },
     },
     columnTitle: {
       description: {
