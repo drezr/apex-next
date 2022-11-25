@@ -58,7 +58,6 @@ let isMouseOver = ref(false)
 .colorpicker-frame {
   width: 142px;
   position: absolute;
-
   display: flex;
   flex-wrap: wrap;
   background-color: white;
@@ -79,7 +78,7 @@ let isMouseOver = ref(false)
 }
 .colorpicker-picker:hover {
   border: 3px solid;
-  filter: brightness(1.5);
+  filter: brightness(1.3);
 }
 .colorpicker-selected {
   border: 3px solid;
