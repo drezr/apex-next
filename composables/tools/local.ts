@@ -55,6 +55,76 @@ const localisation = {
         nl: 'Shift',
         en: 'Shift',
       },
+      status: {
+        fr: 'Statut',
+        nl: 'Statut',
+        en: 'Statut',
+      },
+      limits: {
+        fr: 'Limites de mise hors service',
+        nl: 'Limites de mise hors service',
+        en: 'Limites de mise hors service',
+      },
+      fromLine: {
+        fr: 'Ligne',
+        nl: 'Ligne',
+        en: 'Ligne',
+      },
+      fromStation: {
+        fr: 'Gare',
+        nl: 'Gare',
+        en: 'Gare',
+      },
+      fromLane: {
+        fr: 'Voie',
+        nl: 'Voie',
+        en: 'Voie',
+      },
+      fromSignal: {
+        fr: 'Signal',
+        nl: 'Signal',
+        en: 'Signal',
+      },
+      fromPK: {
+        fr: 'PK',
+        nl: 'PK',
+        en: 'PK',
+      },
+      toLine: {
+        fr: 'Ligne',
+        nl: 'Ligne',
+        en: 'Ligne',
+      },
+      toStation: {
+        fr: 'Gare',
+        nl: 'Gare',
+        en: 'Gare',
+      },
+      toLane: {
+        fr: 'Voie',
+        nl: 'Voie',
+        en: 'Voie',
+      },
+      toSignal: {
+        fr: 'Signal',
+        nl: 'Signal',
+        en: 'Signal',
+      },
+      toPK: {
+        fr: 'PK',
+        nl: 'PK',
+        en: 'PK',
+      },
+      wielding: {
+        fr: 'Soudure',
+        nl: 'Soudure',
+        en: 'Soudure',
+      },
+      supervisor: {
+        fr: 'Responsable',
+        nl: 'Responsable',
+        en: 'Responsable',
+      },
     },
   },
 }
