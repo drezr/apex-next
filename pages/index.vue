@@ -318,13 +318,13 @@
 </template>
 
 <script setup lang="ts">
-const fetchedWorks: Array<Work> = await $fetch('/api/radium/getWorks')
-const fetchedColumnConfigs: Array<ColumnConfig> = await $fetch(
+let works: Array<Work> = await $fetch('/api/radium/getWorks')
+let columnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'
 )
 
-for (let work of fetchedWorks) {
-  for (let config of fetchedColumnConfigs) {
+for (let work of works) {
+  for (let config of columnConfigs) {
     if (!config.isMultiple) {
       let isRowFound = work.rows.find((row) => config.name == row.name)
 
@@ -340,8 +340,8 @@ for (let work of fetchedWorks) {
   }
 }
 
-const works = reactive(fetchedWorks)
-const columnConfigs = reactive(fetchedColumnConfigs)
+works = reactive(works)
+columnConfigs = reactive(columnConfigs)
 let selectedWork = ref(null)
 
 columnConfigs.sort(
@@ -354,7 +354,7 @@ function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
   }
 }
 
-function openDetailModal(work) {
+function openDetailModal(work: Work) {
   selectedWork.value = JSON.parse(JSON.stringify(work))
 }
 
