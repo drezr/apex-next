@@ -21,7 +21,7 @@
         :style="`width: ${columnConfig.width}px;`"
       >
         <div class="work-column-title" :style="_color.pickBG(work.color, 2)">
-          {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
+          {{ _local(["radium", "columnTitle", columnConfig.name]) }}
           <span
             v-if="columnConfig.isClickable && columnConfig.clickAction == 'url'"
             v-html="_icon('box-arrow-up-right', 'black', 10)"
@@ -38,7 +38,7 @@
             class="work-column-subtitle-cell"
             :style="`width: ${subColumn.width}%;`"
           >
-            {{ _local(['radium', 'columnTitle', subColumn.name]) }}
+            {{ _local(["radium", "columnTitle", subColumn.name]) }}
           </div>
         </div>
 
@@ -108,7 +108,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="detailModalLabel">
-              {{ _local(['radium', 'detailModal', 'title']) }}
+              {{ _local(["radium", "detailModal", "title"]) }}
             </h1>
 
             <div class="d-flex">
@@ -121,7 +121,7 @@
                   v-html="_icon('trash', 'white', 15)"
                   style="position: relative; top: -1px; margin-right: 5px"
                 ></span>
-                {{ _local(['common', 'cancel']) }}
+                {{ _local(["common", "cancel"]) }}
               </button>
 
               <button
@@ -133,7 +133,7 @@
                   v-html="_icon('save', 'white', 15)"
                   style="position: relative; top: -1px; margin-right: 5px"
                 ></span>
-                {{ _local(['common', 'save']) }}
+                {{ _local(["common", "save"]) }}
               </button>
             </div>
           </div>
@@ -183,8 +183,15 @@
                 tabindex="0"
               >
                 <div class="d-flex justify-content-end">
-                  <span style="font-weight: bold; position: relative; top: 7px; left: -5px;">
-                    {{ _local(['radium', 'detailModal', 'workColor']) }}
+                  <span
+                    style="
+                      font-weight: bold;
+                      position: relative;
+                      top: 7px;
+                      left: -5px;
+                    "
+                  >
+                    {{ _local(["radium", "detailModal", "workColor"]) }}
                   </span>
 
                   <RadiumColorPicker
@@ -202,7 +209,7 @@
                     class="form-label"
                     style="font-weight: bold; font-size: 18px"
                   >
-                    {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
+                    {{ _local(["radium", "columnTitle", columnConfig.name]) }}
                   </label>
 
                   <div v-if="columnConfig.name == 'shift'">
@@ -297,7 +304,7 @@
                 class="tab-pane fade"
                 id="nav-profile"
                 role="tabpanel"
-                aria-labelledby="nav-profile-tab" 
+                aria-labelledby="nav-profile-tab"
                 tabindex="0"
               >
                 2
@@ -311,44 +318,44 @@
 </template>
 
 <script setup lang="ts">
-let works: Array<Work> = await $fetch('/api/radium/getWorks')
+let works: Array<Work> = await $fetch("/api/radium/getWorks");
 let columnConfigs: Array<ColumnConfig> = await $fetch(
-  '/api/radium/getColumnsConfig'
-)
+  "/api/radium/getColumnsConfig"
+);
 
 for (let work of works) {
   for (let config of columnConfigs) {
     if (!config.isMultiple) {
-      let isRowFound = work.rows.find((row) => config.name == row.name)
+      let isRowFound = work.rows.find((row) => config.name == row.name);
 
       if (!isRowFound) {
         work.rows.push({
           name: config.name,
-          value: '',
-          color: '',
+          value: "",
+          color: "",
           position: 0,
-        })
+        });
       }
     }
   }
 }
 
-works = reactive(works)
-columnConfigs = reactive(columnConfigs)
-let selectedWork: any = ref(null)
+works = reactive(works);
+columnConfigs = reactive(columnConfigs);
+let selectedWork: any = ref(null);
 
 columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
-)
+);
 
 function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
-  if (columnConfig.clickAction == 'url') {
-    window.open(columnConfig.clickValue + row.value, '_blank')
+  if (columnConfig.clickAction == "url") {
+    window.open(columnConfig.clickValue + row.value, "_blank");
   }
 }
 
 function openDetailModal(work: Work) {
-  selectedWork.value = JSON.parse(JSON.stringify(work))
+  selectedWork.value = JSON.parse(JSON.stringify(work));
 }
 
 function saveWork() {}
@@ -356,7 +363,6 @@ function saveWork() {}
 function resetWork() {
   // console.log(works)
   // const targetedWork = works.filter((w) => w.id == selectedWork.value.id)
-
   // selectedWork.value = JSON.parse(JSON.stringify(targetedWork))
 }
 </script>
