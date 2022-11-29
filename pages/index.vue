@@ -97,6 +97,7 @@
     <div
       class="modal fade"
       id="detailModal"
+      ref="detailModal"
       tabindex="-1"
       aria-labelledby="detailModalLabel"
       aria-hidden="true"
@@ -108,7 +109,11 @@
               {{ _local(['radium', 'detailModal', 'title']) }}
             </h1>
 
-            <button type="button" class="btn btn-success">
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-dismiss="modal"
+            >
               <span
                 v-html="_icon('save', 'white', 15)"
                 style="position: relative; top: -1px; margin-right: 5px"
@@ -152,8 +157,8 @@
             </nav>
           </div>
 
-          <div class="modal-body" v-if="selectedWork">
-            <div class="tab-content" id="nav-tabContent">
+          <div class="modal-body">
+            <div class="tab-content" id="nav-tabContent" v-if="selectedWork">
               <div
                 class="tab-pane fade show active"
                 id="nav-home"
@@ -219,6 +224,7 @@
                       <input
                         class="form-control mb-1"
                         :value="shift.schedule"
+                        @blur="shift.schedule = $event.target.value"
                         :style="_color.pickBG(shift.color, 5)"
                       />
 
@@ -251,6 +257,7 @@
                         contenteditable="true"
                         v-html="row.value"
                         :style="_color.pickBG(row.color, 5)"
+                        @blur="row.value = $event.target.innerHTML"
                       ></div>
 
                       <RadiumColorPicker
@@ -301,6 +308,23 @@ let works: Array<Work> = await $fetch('/api/radium/getWorks')
 let columnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'
 )
+
+for (let work of works) {
+  for (let config of columnConfigs) {
+    if (!config.isMultiple) {
+      let isRowFound = work.rows.find((row) => config.name == row.name)
+
+      if (!isRowFound) {
+        work.rows.push({
+          name: config.name,
+          value: '',
+          color: '',
+          position: 0,
+        })
+      }
+    }
+  }
+}
 
 works = reactive(works)
 columnConfigs = reactive(columnConfigs)
