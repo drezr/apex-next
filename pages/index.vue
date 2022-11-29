@@ -86,7 +86,7 @@
               columnConfig.isClickable && onColumnClick(columnConfig, row)
             "
           >
-            <div v-html="row.value"></div>
+            <div v-html="row.value" class="work-row-value"></div>
           </div>
         </div>
       </div>
@@ -114,20 +114,21 @@
             <div class="d-flex">
               <button
                 type="button"
-                class="btn btn-danger me-2"
+                class="btn btn-secondary me-2"
                 @click="resetWork()"
               >
                 <span
-                  v-html="_icon('trash', 'white', 15)"
+                  v-html="_icon('arrow-clockwise', 'white', 15)"
                   style="position: relative; top: -1px; margin-right: 5px"
                 ></span>
-                {{ _local(["common", "cancel"]) }}
+                {{ _local(["common", "reset"]) }}
               </button>
 
               <button
                 type="button"
                 class="btn btn-success"
                 data-bs-dismiss="modal"
+                @click="saveWork()"
               >
                 <span
                   v-html="_icon('save', 'white', 15)"
@@ -241,7 +242,7 @@
                         class="form-control mb-1"
                         contenteditable="true"
                         v-html="shift.schedule"
-                        @blur="shift.schedule = $event.target?.innerHTML"
+                        @blur="setField($event, shift, 'schedule')"
                         :style="_color.pickBG(shift.color, 5)"
                       ></div>
 
@@ -273,7 +274,7 @@
                         class="form-control mb-2"
                         contenteditable="true"
                         v-html="row.value"
-                        @blur="row.value = $event.target?.innerHTML"
+                        @blur="setField($event, row, 'value')"
                         :style="_color.pickBG(row.color, 5)"
                       ></div>
 
@@ -345,6 +346,7 @@ for (let work of works) {
 
 works = reactive(works)
 columnConfigs = reactive(columnConfigs)
+
 let selectedWork: any = ref(null)
 
 columnConfigs.sort(
@@ -361,13 +363,23 @@ function openDetailModal(work: Work) {
   selectedWork.value = JSON.parse(JSON.stringify(work))
 }
 
-function saveWork() {}
+function saveWork() {
+  for (let work of works) {
+    if (work.id == selectedWork.value.id) {
+      Object.assign(work, selectedWork.value)
+    }
+  }
+}
 
 function resetWork() {
   let rawWorks = toRaw(works)
   const targetedWork = rawWorks.find((w) => w.id == selectedWork.value.id)
 
   selectedWork.value = JSON.parse(JSON.stringify(targetedWork))
+}
+
+function setField(event: any, parent: any, field: string) {
+  parent[field] = event.target.innerHTML
 }
 </script>
 
@@ -437,6 +449,12 @@ $inner-border-color: rgb(129, 129, 129);
 
 .work-row-frame-clickable:hover {
   filter: brightness(1.1);
+}
+
+.work-row-value {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  padding: 0 5px;
 }
 
 .work-shift-frame {
