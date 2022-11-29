@@ -101,6 +101,8 @@
       tabindex="-1"
       aria-labelledby="detailModalLabel"
       aria-hidden="true"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
     >
       <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -109,17 +111,31 @@
               {{ _local(['radium', 'detailModal', 'title']) }}
             </h1>
 
-            <button
-              type="button"
-              class="btn btn-success"
-              data-bs-dismiss="modal"
-            >
-              <span
-                v-html="_icon('save', 'white', 15)"
-                style="position: relative; top: -1px; margin-right: 5px"
-              ></span>
-              {{ _local(['common', 'save']) }}
-            </button>
+            <div class="d-flex">
+              <button
+                type="button"
+                class="btn btn-danger me-2"
+                @click="resetWork()"
+              >
+                <span
+                  v-html="_icon('trash', 'white', 15)"
+                  style="position: relative; top: -1px; margin-right: 5px"
+                ></span>
+                {{ _local(['common', 'cancel']) }}
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-success"
+                data-bs-dismiss="modal"
+              >
+                <span
+                  v-html="_icon('save', 'white', 15)"
+                  style="position: relative; top: -1px; margin-right: 5px"
+                ></span>
+                {{ _local(['common', 'save']) }}
+              </button>
+            </div>
           </div>
 
           <div class="work-modal-nav">
@@ -224,7 +240,6 @@
                       <input
                         class="form-control mb-1"
                         :value="shift.schedule"
-                        @blur="shift.schedule = $event.target.value"
                         :style="_color.pickBG(shift.color, 5)"
                       />
 
@@ -257,7 +272,6 @@
                         contenteditable="true"
                         v-html="row.value"
                         :style="_color.pickBG(row.color, 5)"
-                        @blur="row.value = $event.target.innerHTML"
                       ></div>
 
                       <RadiumColorPicker
@@ -304,13 +318,13 @@
 </template>
 
 <script setup lang="ts">
-let works: Array<Work> = await $fetch('/api/radium/getWorks')
-let columnConfigs: Array<ColumnConfig> = await $fetch(
+const fetchedWorks: Array<Work> = await $fetch('/api/radium/getWorks')
+const fetchedColumnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'
 )
 
-for (let work of works) {
-  for (let config of columnConfigs) {
+for (let work of fetchedWorks) {
+  for (let config of fetchedColumnConfigs) {
     if (!config.isMultiple) {
       let isRowFound = work.rows.find((row) => config.name == row.name)
 
@@ -326,9 +340,8 @@ for (let work of works) {
   }
 }
 
-works = reactive(works)
-columnConfigs = reactive(columnConfigs)
-
+const works = reactive(fetchedWorks)
+const columnConfigs = reactive(fetchedColumnConfigs)
 let selectedWork = ref(null)
 
 columnConfigs.sort(
@@ -342,7 +355,16 @@ function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
 }
 
 function openDetailModal(work) {
-  selectedWork.value = work
+  selectedWork.value = JSON.parse(JSON.stringify(work))
+}
+
+function saveWork() {}
+
+function resetWork() {
+  // console.log(works)
+  // const targetedWork = works.filter((w) => w.id == selectedWork.value.id)
+
+  // selectedWork.value = JSON.parse(JSON.stringify(targetedWork))
 }
 </script>
 

@@ -5,6 +5,11 @@ const localisation = {
       nl: 'Enregistrer',
       en: 'Enregistrer',
     },
+    cancel: {
+      fr: 'Annuler',
+      nl: 'Annuler',
+      en: 'Annuler',
+    },
   },
   radium: {
     detailModal: {

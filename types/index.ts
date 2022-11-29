@@ -11,13 +11,13 @@ declare global {
   type DateString = `${YYYY}-${MM}-${DD}`
 
   interface Profile {
-    id: number
+    id?: number
     name: string
     chosenLanguage: string
   }
 
   interface WorkRow {
-    id: number
+    id?: number
     name: string
     value: string
     color: string
@@ -25,7 +25,7 @@ declare global {
   }
 
   interface WorkShift {
-    id: number
+    id?: number
     date: DateString
     schedule: string
     color: string
@@ -33,7 +33,7 @@ declare global {
   }
 
   interface Work {
-    id: number
+    id?: number
     color: string
     rows: Array<WorkRow>
     shifts: Array<WorkShift>
