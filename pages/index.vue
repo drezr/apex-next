@@ -237,11 +237,13 @@
                         {{ _date.formatDatetimeNoYear(shift.date) }}
                       </div>
 
-                      <input
+                      <div
                         class="form-control mb-1"
-                        :value="shift.schedule"
+                        contenteditable="true"
+                        v-html="shift.schedule"
+                        @blur="shift.schedule = $event.target?.innerHTML"
                         :style="_color.pickBG(shift.color, 5)"
-                      />
+                      ></div>
 
                       <RadiumColorPicker
                         :parent="shift"
@@ -271,6 +273,7 @@
                         class="form-control mb-2"
                         contenteditable="true"
                         v-html="row.value"
+                        @blur="row.value = $event.target?.innerHTML"
                         :style="_color.pickBG(row.color, 5)"
                       ></div>
 
@@ -318,15 +321,15 @@
 </template>
 
 <script setup lang="ts">
-let works: Array<Work> = await $fetch("/api/radium/getWorks");
+let works: Array<Work> = await $fetch("/api/radium/getWorks")
 let columnConfigs: Array<ColumnConfig> = await $fetch(
   "/api/radium/getColumnsConfig"
-);
+)
 
 for (let work of works) {
   for (let config of columnConfigs) {
     if (!config.isMultiple) {
-      let isRowFound = work.rows.find((row) => config.name == row.name);
+      let isRowFound = work.rows.find((row) => config.name == row.name)
 
       if (!isRowFound) {
         work.rows.push({
@@ -334,36 +337,37 @@ for (let work of works) {
           value: "",
           color: "",
           position: 0,
-        });
+        })
       }
     }
   }
 }
 
-works = reactive(works);
-columnConfigs = reactive(columnConfigs);
-let selectedWork: any = ref(null);
+works = reactive(works)
+columnConfigs = reactive(columnConfigs)
+let selectedWork: any = ref(null)
 
 columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
-);
+)
 
 function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
   if (columnConfig.clickAction == "url") {
-    window.open(columnConfig.clickValue + row.value, "_blank");
+    window.open(columnConfig.clickValue + row.value, "_blank")
   }
 }
 
 function openDetailModal(work: Work) {
-  selectedWork.value = JSON.parse(JSON.stringify(work));
+  selectedWork.value = JSON.parse(JSON.stringify(work))
 }
 
 function saveWork() {}
 
 function resetWork() {
-  // console.log(works)
-  // const targetedWork = works.filter((w) => w.id == selectedWork.value.id)
-  // selectedWork.value = JSON.parse(JSON.stringify(targetedWork))
+  let rawWorks = toRaw(works)
+  const targetedWork = rawWorks.find((w) => w.id == selectedWork.value.id)
+
+  selectedWork.value = JSON.parse(JSON.stringify(targetedWork))
 }
 </script>
 
