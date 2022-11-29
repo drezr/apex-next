@@ -183,14 +183,7 @@
                 tabindex="0"
               >
                 <div class="d-flex justify-content-end">
-                  <span
-                    style="
-                      font-weight: bold;
-                      position: relative;
-                      top: 7px;
-                      left: -5px;
-                    "
-                  >
+                  <span style="font-weight: bold; position: relative; top: 7px; left: -5px;">
                     {{ _local(['radium', 'detailModal', 'workColor']) }}
                   </span>
 
@@ -256,7 +249,7 @@
                   <div v-else>
                     <div
                       v-for="row in selectedWork.rows.filter(
-                        (row) => row.name === columnConfig.name
+                        (row: WorkRow) => row.name === columnConfig.name
                       )"
                       class="d-flex"
                       style="align-items: center"
@@ -304,7 +297,7 @@
                 class="tab-pane fade"
                 id="nav-profile"
                 role="tabpanel"
-                aria-labelledby="nav-profile-tab"
+                aria-labelledby="nav-profile-tab" 
                 tabindex="0"
               >
                 2
@@ -342,7 +335,7 @@ for (let work of works) {
 
 works = reactive(works)
 columnConfigs = reactive(columnConfigs)
-let selectedWork = ref(null)
+let selectedWork: any = ref(null)
 
 columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
