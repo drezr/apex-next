@@ -21,7 +21,7 @@
         :style="`width: ${columnConfig.width}px;`"
       >
         <div class="work-column-title" :style="_color.pickBG(work.color, 2)">
-          {{ _local(["radium", "columnTitle", columnConfig.name]) }}
+          {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
           <span
             v-if="columnConfig.isClickable && columnConfig.clickAction == 'url'"
             v-html="_icon('box-arrow-up-right', 'black', 10)"
@@ -38,7 +38,7 @@
             class="work-column-subtitle-cell"
             :style="`width: ${subColumn.width}%;`"
           >
-            {{ _local(["radium", "columnTitle", subColumn.name]) }}
+            {{ _local(['radium', 'columnTitle', subColumn.name]) }}
           </div>
         </div>
 
@@ -108,7 +108,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="detailModalLabel">
-              {{ _local(["radium", "detailModal", "title"]) }}
+              {{ _local(['radium', 'detailModal', 'title']) }}
             </h1>
 
             <div class="d-flex">
@@ -121,7 +121,7 @@
                   v-html="_icon('arrow-clockwise', 'white', 15)"
                   style="position: relative; top: -1px; margin-right: 5px"
                 ></span>
-                {{ _local(["common", "reset"]) }}
+                {{ _local(['common', 'reset']) }}
               </button>
 
               <button
@@ -134,7 +134,7 @@
                   v-html="_icon('save', 'white', 15)"
                   style="position: relative; top: -1px; margin-right: 5px"
                 ></span>
-                {{ _local(["common", "save"]) }}
+                {{ _local(['common', 'save']) }}
               </button>
             </div>
           </div>
@@ -192,7 +192,7 @@
                       left: -5px;
                     "
                   >
-                    {{ _local(["radium", "detailModal", "workColor"]) }}
+                    {{ _local(['radium', 'detailModal', 'workColor']) }}
                   </span>
 
                   <RadiumColorPicker
@@ -210,7 +210,7 @@
                     class="form-label"
                     style="font-weight: bold; font-size: 18px"
                   >
-                    {{ _local(["radium", "columnTitle", columnConfig.name]) }}
+                    {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
                   </label>
 
                   <div v-if="columnConfig.name == 'shift'">
@@ -231,10 +231,7 @@
                         disabled
                       />
 
-                      <div
-                        class="form-control mb-1 mx-1 work-modal-date"
-                        :style="_color.pickBG(shift.color, 5)"
-                      >
+                      <div class="form-control mb-1 mx-1 work-modal-date">
                         {{ _date.formatDatetimeNoYear(shift.date) }}
                       </div>
 
@@ -243,7 +240,6 @@
                         contenteditable="true"
                         v-html="shift.schedule"
                         @blur="setField($event, shift, 'schedule')"
-                        :style="_color.pickBG(shift.color, 5)"
                       ></div>
 
                       <RadiumColorPicker
@@ -275,7 +271,6 @@
                         contenteditable="true"
                         v-html="row.value"
                         @blur="setField($event, row, 'value')"
-                        :style="_color.pickBG(row.color, 5)"
                       ></div>
 
                       <RadiumColorPicker
@@ -322,9 +317,9 @@
 </template>
 
 <script setup lang="ts">
-let works: Array<Work> = await $fetch("/api/radium/getWorks")
+let works: Array<Work> = await $fetch('/api/radium/getWorks')
 let columnConfigs: Array<ColumnConfig> = await $fetch(
-  "/api/radium/getColumnsConfig"
+  '/api/radium/getColumnsConfig'
 )
 
 for (let work of works) {
@@ -335,8 +330,8 @@ for (let work of works) {
       if (!isRowFound) {
         work.rows.push({
           name: config.name,
-          value: "",
-          color: "",
+          value: '',
+          color: '',
           position: 0,
         })
       }
@@ -354,8 +349,8 @@ columnConfigs.sort(
 )
 
 function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
-  if (columnConfig.clickAction == "url") {
-    window.open(columnConfig.clickValue + row.value, "_blank")
+  if (columnConfig.clickAction == 'url') {
+    window.open(columnConfig.clickValue + row.value, '_blank')
   }
 }
 
