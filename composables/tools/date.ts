@@ -1,9 +1,9 @@
 export default class DateTools {
-  formatDatetimeNoYear(datetime: DateString) {
+  formatDatetimeNoYear(datetime: string) {
     /**
      * Returns datetime with the following format: DD/MM
      *
-     * @param {DateString} datetime the date to convert. Expected format 'YYYY-MM-DD'
+     * @param {string} datetime the date to convert. Expected format 'YYYY-MM-DD'
      */
 
     let [year, month, day] = datetime.split('-')
@@ -14,7 +14,7 @@ export default class DateTools {
     return `${day}/${month}`
   }
 
-  getWeek(datetime: DateString) {
+  getWeek(datetime: string) {
     const date = new Date(datetime)
     date.setHours(0, 0, 0, 0)
     date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7))
