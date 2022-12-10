@@ -40,7 +40,10 @@
 
 <script setup lang="ts">
 defineProps({
-  parent: Object,
+  parent: {
+    type: Object,
+    default: {},
+  },
   top: {
     type: Number,
     default: 0,
