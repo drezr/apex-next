@@ -79,7 +79,7 @@
               `work-row-frame-${
                 columnConfig.isMultiple ? 'multiple' : 'single'
               }`,
-              columnConfig.isClickable ? 'work-row-frame-clickable' : '',
+              columnConfig.isClickable ? 'work-row-frame-clickable' : ''
             ]"
             :style="_color.pickBG(row.color, 4)"
             @click="
@@ -195,7 +195,7 @@
                     {{ _local(['radium', 'detailModal', 'workColor']) }}
                   </span>
 
-                  <RadiumColorPicker
+                  <ColorPicker
                     v-if="selectedWork"
                     :parent="selectedWork"
                     class="mx-2"
@@ -242,7 +242,7 @@
                         @blur="setField($event, shift, 'schedule')"
                       ></div>
 
-                      <RadiumColorPicker
+                      <ColorPicker
                         :parent="shift"
                         class="mx-2"
                         :top="-45"
@@ -266,14 +266,16 @@
                         class="work-modal-drag"
                       ></span>
 
-                      <div
+                      <!-- <div
                         class="form-control mb-2"
                         contenteditable="true"
                         v-html="row.value"
                         @blur="setField($event, row, 'value')"
-                      ></div>
+                      ></div> -->
 
-                      <RadiumColorPicker
+                      <Tiptap v-model="row.value" class="mb-2 flex-grow-1" />
+
+                      <ColorPicker
                         :parent="row"
                         class="mx-2"
                         :top="-45"
@@ -332,7 +334,7 @@ for (let work of works) {
           name: config.name,
           value: '',
           color: '',
-          position: 0,
+          position: 0
         })
       }
     }
@@ -449,7 +451,7 @@ $inner-border-color: rgb(129, 129, 129);
 .work-row-value {
   overflow-wrap: break-word;
   word-break: break-all;
-  padding: 0 5px;
+  padding: 2px 5px;
 }
 
 .work-shift-frame {
