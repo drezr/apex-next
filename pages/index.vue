@@ -450,7 +450,7 @@ $inner-border-color: rgb(129, 129, 129);
 
 .work-row-value {
   overflow-wrap: break-word;
-  word-break: break-all;
+  word-break: break-word;
   padding: 2px 5px;
 }
 

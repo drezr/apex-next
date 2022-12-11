@@ -51,7 +51,8 @@ export default defineEventHandler((event) => {
         {
           id: 1,
           name: 'description',
-          value: 'Work <b>description</b> <span style="color: red;">#3</span>',
+          value:
+            'Work <b>description</b> <span style="color: #F44336;">#3</span>',
           color: null,
           position: 0,
         },
