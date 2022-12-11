@@ -54,7 +54,6 @@ import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
-
 import TextStyle from '@tiptap/extension-text-style'
 
 let props = defineProps({
@@ -78,34 +77,6 @@ let textActions = [
 ]
 
 const emit = defineEmits(['update:modelValue'])
-
-function onActionClick(slug: string) {
-  keepToolbar.value = true
-  const vm = editor.value.chain().focus()
-  const actionTriggers: any = {
-    bold: () => vm.toggleBold().run(),
-    italic: () => vm.toggleItalic().run(),
-    underline: () => vm.toggleUnderline().run(),
-    bulletList: () => vm.toggleBulletList().run(),
-    orderedList: () => vm.toggleOrderedList().run(),
-    undo: () => vm.undo().run(),
-    redo: () => vm.redo().run(),
-  }
-
-  actionTriggers[slug]()
-}
-
-function onHeadingClick(index: number) {
-  keepToolbar.value = true
-  const vm = editor.value.chain().focus()
-  vm.toggleHeading({ level: index }).run()
-}
-
-function onColorClick(color: any) {
-  const pickedColor = _color.pick(color)
-
-  editor.value.chain().focus().setColor(pickedColor).run()
-}
 
 onMounted(() => {
   editor.value = new Editor({
@@ -153,6 +124,42 @@ onBeforeUnmount(() => {
   editor.value.destroy()
 })
 
+watch(
+  () => props.modelValue,
+  (newValue, oldValue) => {
+    if (editor.value.getHTML() === newValue) return
+    editor.value.commands.setContent(props.modelValue, false)
+  }
+)
+
+function onActionClick(slug: string) {
+  keepToolbar.value = true
+  const vm = editor.value.chain().focus()
+  const actionTriggers: any = {
+    bold: () => vm.toggleBold().run(),
+    italic: () => vm.toggleItalic().run(),
+    underline: () => vm.toggleUnderline().run(),
+    bulletList: () => vm.toggleBulletList().run(),
+    orderedList: () => vm.toggleOrderedList().run(),
+    undo: () => vm.undo().run(),
+    redo: () => vm.redo().run(),
+  }
+
+  actionTriggers[slug]()
+}
+
+function onHeadingClick(index: number) {
+  keepToolbar.value = true
+  const vm = editor.value.chain().focus()
+  vm.toggleHeading({ level: index }).run()
+}
+
+function onColorClick(color: any) {
+  const pickedColor = _color.pick(color)
+
+  editor.value.chain().focus().setColor(pickedColor).run()
+}
+
 function setShowToolbar(value: boolean, timeoutValue?: number) {
   setTimeout(() => {
     if (value == false && keepToolbar.value == true) {
@@ -168,14 +175,6 @@ function setShowToolbar(value: boolean, timeoutValue?: number) {
     }
   }, 100)
 }
-
-watch(
-  () => props.modelValue,
-  (newValue, oldValue) => {
-    if (editor.value.getHTML() === newValue) return
-    editor.value.commands.setContent(props.modelValue, false)
-  }
-)
 </script>
 
 <style lang="scss" scoped>
