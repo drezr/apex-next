@@ -79,7 +79,7 @@
               `work-row-frame-${
                 columnConfig.isMultiple ? 'multiple' : 'single'
               }`,
-              columnConfig.isClickable ? 'work-row-frame-clickable' : ''
+              columnConfig.isClickable ? 'work-row-frame-clickable' : '',
             ]"
             :style="_color.pickBG(row.color, 4)"
             @click="
@@ -334,7 +334,7 @@ for (let work of works) {
           name: config.name,
           value: '',
           color: '',
-          position: 0
+          position: 0,
         })
       }
     }

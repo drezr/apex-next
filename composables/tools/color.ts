@@ -1,5 +1,5 @@
 export default class ColorTools {
-  colors: Object
+  colors: Record<string, any>
 
   constructor() {
     this.colors = {
@@ -318,5 +318,34 @@ export default class ColorTools {
      */
 
     return color ? `background-color: ${this.pick(color, lightness)};` : ''
+  }
+
+  rgb2hex(rgb: any) {
+    // From https://stackoverflow.com/a/3627747
+    return `#${rgb
+      .match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+      .slice(1)
+      .map((n: any) => parseInt(n, 10).toString(16).padStart(2, '0'))
+      .join('')}`
+  }
+
+  reversePick(color: string) {
+    /**
+     * Returns desired color name from hexadeciaml input
+     *
+     * @param {string} color the desired color in hexadecimal format
+     */
+
+    if (color && color.includes('rgb')) {
+      color = this.rgb2hex(color)
+    }
+
+    for (let key in this.colors) {
+      if (color && this.colors[key][0].toUpperCase() == color.toUpperCase()) {
+        return key
+      }
+    }
+
+    return null
   }
 }

@@ -2,16 +2,29 @@
   <div>
     <Transition>
       <div v-if="editor && showToolbar" style="position: relative">
-        <div class="action-buttons-frame">
+        <div class="action-buttons-frame" @click="keepToolbar = true">
+          <ColorPicker
+            :parent="{
+              color: _color.reversePick(
+                editor.getAttributes('textStyle').color
+              ),
+            }"
+            class="mx-2"
+            :top="-20"
+            :left="-105"
+            style="position: relative; top: 7px"
+            @update:color="onColorClick"
+          />
+
           <button
             v-for="index in [
               { size: 1, icon: 1 },
               { size: 3, icon: 2 },
-              { size: 5, icon: 3 }
+              { size: 5, icon: 3 },
             ]"
             class="action-button"
             :class="{
-              active: editor.isActive('heading', { level: index.size })
+              active: editor.isActive('heading', { level: index.size }),
             }"
             @click="onHeadingClick(index.size)"
           >
@@ -40,12 +53,15 @@
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
+import { Color } from '@tiptap/extension-color'
+
+import TextStyle from '@tiptap/extension-text-style'
 
 let props = defineProps({
   modelValue: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 })
 
 let showToolbar = ref(false)
@@ -58,7 +74,7 @@ let textActions = [
   { slug: 'bulletList', icon: 'list-ul', active: 'bulletList' },
   { slug: 'orderedList', icon: 'list-ol', active: 'orderedList' },
   { slug: 'undo', icon: 'arrow-counterclockwise', active: 'undo' },
-  { slug: 'redo', icon: 'arrow-clockwise', active: 'redo' }
+  { slug: 'redo', icon: 'arrow-clockwise', active: 'redo' },
 ]
 
 const emit = defineEmits(['update:modelValue'])
@@ -73,7 +89,7 @@ function onActionClick(slug: string) {
     bulletList: () => vm.toggleBulletList().run(),
     orderedList: () => vm.toggleOrderedList().run(),
     undo: () => vm.undo().run(),
-    redo: () => vm.redo().run()
+    redo: () => vm.redo().run(),
   }
 
   actionTriggers[slug]()
@@ -85,6 +101,12 @@ function onHeadingClick(index: number) {
   vm.toggleHeading({ level: index }).run()
 }
 
+function onColorClick(color: any) {
+  const pickedColor = _color.pick(color)
+
+  editor.value.chain().focus().setColor(pickedColor).run()
+}
+
 onMounted(() => {
   editor.value = new Editor({
     content: props.modelValue,
@@ -92,26 +114,28 @@ onMounted(() => {
       StarterKit.configure({
         paragraph: {
           HTMLAttributes: {
-            class: 'tiptap-field-paragraph'
-          }
+            class: 'tiptap-field-paragraph',
+          },
         },
         bulletList: {
           HTMLAttributes: {
-            class: 'tiptap-field-list'
-          }
+            class: 'tiptap-field-list',
+          },
         },
         orderedList: {
           HTMLAttributes: {
-            class: 'tiptap-field-list'
-          }
-        }
+            class: 'tiptap-field-list',
+          },
+        },
       }),
-      Underline
+      Underline,
+      Color,
+      TextStyle,
     ],
     editorProps: {
       attributes: {
-        class: 'form-control'
-      }
+        class: 'form-control',
+      },
     },
     onUpdate: () => {
       emit('update:modelValue', editor.value.getHTML())
@@ -121,7 +145,7 @@ onMounted(() => {
     },
     onBlur() {
       setShowToolbar(false, 50)
-    }
+    },
   })
 })
 
@@ -145,23 +169,23 @@ function setShowToolbar(value: boolean, timeoutValue?: number) {
   }, 100)
 }
 
-// dunno what its used for
-watchEffect(() => {
-  modelValue: (value: string) => {
-    if (editor.value.getHTML() === value) return
+watch(
+  () => props.modelValue,
+  (newValue, oldValue) => {
+    if (editor.value.getHTML() === newValue) return
     editor.value.commands.setContent(props.modelValue, false)
   }
-})
+)
 </script>
 
 <style lang="scss" scoped>
-$button-active-color: rgb(122, 228, 255);
+$button-active-color: rgb(131, 189, 204);
 .active {
   background-color: $button-active-color !important;
 }
 .action-buttons-frame {
   background-color: white;
-  border: 1px rgb(209, 209, 209) solid;
+  border: 1px rgb(132, 165, 173) solid;
   border-radius: 5px;
   position: absolute;
   bottom: 5px;
@@ -173,7 +197,7 @@ $button-active-color: rgb(122, 228, 255);
 .action-button {
   margin: 2px;
   border-radius: 5px;
-  border: 1px rgb(21, 110, 133) solid;
+  border: 1px rgb(132, 165, 173) solid;
   padding: 0 3px 1px 4px;
   background-color: rgb(235, 251, 255);
   transition: background-color 0.4s ease;

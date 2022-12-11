@@ -7,7 +7,9 @@
         `border-color : ${_color.pick(parent.color, -3)}`,
       ]"
       @mouseover="isMouseOver = true"
-    ></div>
+    >
+      <span v-if="!parent.color" class="colorpicker-none"></span>
+    </div>
 
     <div
       v-if="isMouseOver"
@@ -24,7 +26,11 @@
             _color.pickBG(color),
             `border-color : ${_color.pick(color, -3)}`,
           ]"
-          @click=";(parent.color = color), (isMouseOver = false)"
+          @click="
+            ;(parent.color = color),
+              (isMouseOver = false),
+              emit('update:color', color)
+          "
         ></div>
       </div>
 
@@ -32,8 +38,14 @@
         class="colorpicker-picker m-1"
         :class="parent.color === null ? 'colorpicker-selected' : ''"
         :style="_color.pickBG(null)"
-        @click=";(parent.color = null), (isMouseOver = false)"
-      ></div>
+        @click="
+          ;(parent.color = null),
+            (isMouseOver = false),
+            emit('update:color', null)
+        "
+      >
+        <span class="colorpicker-none"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -53,6 +65,8 @@ defineProps({
     default: 0,
   },
 })
+
+const emit = defineEmits(['update:color'])
 
 let isMouseOver = ref(false)
 </script>
@@ -78,6 +92,9 @@ let isMouseOver = ref(false)
   cursor: pointer;
   border: 1px solid;
   transition: border 0.05s, filter 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .colorpicker-picker:hover {
   border: 3px solid;
@@ -85,5 +102,12 @@ let isMouseOver = ref(false)
 }
 .colorpicker-selected {
   border: 3px solid;
+}
+
+.colorpicker-none {
+  height: 100%;
+  border: 2px rgb(139, 139, 139) solid;
+  background-color: rgb(139, 139, 139);
+  transform: rotate(45deg);
 }
 </style>
