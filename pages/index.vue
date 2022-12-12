@@ -6,7 +6,7 @@
       :style="_color.pickBG(work.color, 4)"
     >
       <div
-        class="work-expand-button"
+        class="work-edit-button"
         :style="_color.pickBG(work.color, 4)"
         data-bs-toggle="modal"
         data-bs-target="#detailModal"
@@ -104,216 +104,11 @@
       data-bs-backdrop="static"
       data-bs-keyboard="false"
     >
-      <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="detailModalLabel">
-              {{ _local(['radium', 'detailModal', 'title']) }}
-            </h1>
-
-            <div class="d-flex">
-              <button
-                type="button"
-                class="btn btn-secondary me-2"
-                @click="resetWork()"
-              >
-                <span
-                  v-html="_icon('arrow-clockwise', 'white', 15)"
-                  style="position: relative; top: -1px; margin-right: 5px"
-                ></span>
-                {{ _local(['common', 'reset']) }}
-              </button>
-
-              <button
-                type="button"
-                class="btn btn-success"
-                data-bs-dismiss="modal"
-                @click="saveWork()"
-              >
-                <span
-                  v-html="_icon('save', 'white', 15)"
-                  style="position: relative; top: -1px; margin-right: 5px"
-                ></span>
-                {{ _local(['common', 'save']) }}
-              </button>
-            </div>
-          </div>
-
-          <div class="work-modal-nav">
-            <nav>
-              <div
-                class="nav nav-pills justify-content-center"
-                id="nav-tab"
-                role="tablist"
-              >
-                <button
-                  class="nav-link active"
-                  id="nav-home-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-home"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-home"
-                  aria-selected="true"
-                >
-                  Informations
-                </button>
-                <button
-                  class="nav-link"
-                  id="nav-profile-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#nav-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="nav-profile"
-                  aria-selected="false"
-                >
-                  Participations
-                </button>
-              </div>
-            </nav>
-          </div>
-
-          <div class="modal-body">
-            <div class="tab-content" id="nav-tabContent" v-if="selectedWork">
-              <div
-                class="tab-pane fade show active"
-                id="nav-home"
-                role="tabpanel"
-                aria-labelledby="nav-home-tab"
-                tabindex="0"
-              >
-                <div class="d-flex justify-content-end">
-                  <span
-                    style="
-                      font-weight: bold;
-                      position: relative;
-                      top: 7px;
-                      left: -5px;
-                    "
-                  >
-                    {{ _local(['radium', 'detailModal', 'workColor']) }}
-                  </span>
-
-                  <ColorPicker
-                    v-if="selectedWork"
-                    :parent="selectedWork"
-                    class="mx-2"
-                    :top="-20"
-                    :left="-105"
-                    style="position: relative; top: 10px"
-                  />
-                </div>
-
-                <div v-for="columnConfig in columnConfigs" class="mb-3">
-                  <label
-                    class="form-label"
-                    style="font-weight: bold; font-size: 18px"
-                  >
-                    {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
-                  </label>
-
-                  <div v-if="columnConfig.name == 'shift'">
-                    <div
-                      v-for="shift in selectedWork.shifts"
-                      class="d-flex"
-                      style="align-items: center"
-                    >
-                      <span
-                        v-if="columnConfig.isMultiple"
-                        v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
-                        class="work-modal-drag"
-                      ></span>
-
-                      <input
-                        class="form-control mb-1"
-                        :value="_date.getWeek(shift.date)"
-                        disabled
-                      />
-
-                      <div class="form-control mb-1 mx-1 work-modal-date">
-                        {{ _date.formatDatetimeNoYear(shift.date) }}
-                      </div>
-
-                      <div
-                        class="form-control mb-1"
-                        contenteditable="true"
-                        v-html="shift.schedule"
-                        @blur="setField($event, shift, 'schedule')"
-                      ></div>
-
-                      <ColorPicker
-                        :parent="shift"
-                        class="mx-2"
-                        :top="-45"
-                        :left="-105"
-                        style="position: relative; top: -2px"
-                      />
-                    </div>
-                  </div>
-
-                  <div v-else>
-                    <div
-                      v-for="row in selectedWork.rows.filter(
-                        (row: WorkRow) => row.name === columnConfig.name
-                      )"
-                      class="d-flex"
-                      style="align-items: center"
-                    >
-                      <span
-                        v-if="columnConfig.isMultiple"
-                        v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
-                        class="work-modal-drag"
-                      ></span>
-
-                      <!-- <div
-                        class="form-control mb-2"
-                        contenteditable="true"
-                        v-html="row.value"
-                        @blur="setField($event, row, 'value')"
-                      ></div> -->
-
-                      <Tiptap v-model="row.value" class="mb-2 flex-grow-1" />
-
-                      <ColorPicker
-                        :parent="row"
-                        class="mx-2"
-                        :top="-45"
-                        :left="-105"
-                        style="position: relative; top: -2px"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="d-grid">
-                    <button
-                      v-if="columnConfig.isMultiple"
-                      type="button"
-                      class="btn btn-success btn-sm"
-                      style="padding: 0"
-                    >
-                      <span
-                        v-html="_icon('plus', 'white', 20)"
-                        style="position: relative; top: -2px"
-                      ></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="tab-pane fade"
-                id="nav-profile"
-                role="tabpanel"
-                aria-labelledby="nav-profile-tab"
-                tabindex="0"
-              >
-                2
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <RadiumDetailModal
+        :works="works"
+        :selectedWork="selectedWork"
+        :columnConfigs="columnConfigs"
+      />
     </div>
   </div>
 </template>
@@ -358,25 +153,6 @@ function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
 
 function openDetailModal(work: Work) {
   selectedWork.value = JSON.parse(JSON.stringify(work))
-}
-
-function saveWork() {
-  for (let work of works) {
-    if (work.id == selectedWork.value.id) {
-      Object.assign(work, selectedWork.value)
-    }
-  }
-}
-
-function resetWork() {
-  let rawWorks = toRaw(works)
-  const targetedWork = rawWorks.find((w) => w.id == selectedWork.value.id)
-
-  selectedWork.value = JSON.parse(JSON.stringify(targetedWork))
-}
-
-function setField(event: any, parent: any, field: string) {
-  parent[field] = event.target.innerHTML
 }
 </script>
 
@@ -470,7 +246,7 @@ $inner-border-color: rgb(129, 129, 129);
   border-color: $inner-border-color;
 }
 
-.work-expand-button {
+.work-edit-button {
   border-right: 1px solid;
   border-color: $inner-border-color;
   display: flex;
@@ -481,46 +257,12 @@ $inner-border-color: rgb(129, 129, 129);
   cursor: pointer;
 }
 
-.work-expand-button:hover {
+.work-edit-button:hover {
   filter: brightness(1.1);
 }
-
-.work-modal-nav {
-  padding: 10px;
-  border-bottom: 1px solid var(--bs-modal-header-border-color);
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
-}
-
-.work-modal-date {
-  cursor: pointer;
-}
-
-.work-modal-date:hover {
-  background-color: rgb(250, 250, 250);
-}
-
-.work-modal-drag {
-  position: relative;
-  top: -4px;
-  margin-right: 10px;
-  cursor: grab;
-}
-
-.work-modal-drag:active {
-  cursor: grabbing;
-}
-
-.modal-header {
-  padding: 5px 5px 5px 15px;
-}
-.work-modal-nav {
-  padding: 5px;
-}
-
 .modal.fade .modal-dialog {
   transition: transform 0.05s ease-out;
 }
-
 .fade {
   transition: opacity 0.05s ease-out;
 }
