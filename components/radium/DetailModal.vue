@@ -115,7 +115,6 @@
                   style="align-items: center"
                 >
                   <span
-                    v-if="columnConfig.isMultiple"
                     v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
                     class="work-modal-drag"
                   ></span>
@@ -156,7 +155,6 @@
                   style="align-items: center"
                 >
                   <span
-                    v-if="columnConfig.isMultiple"
                     v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
                     class="work-modal-drag"
                   ></span>
@@ -175,7 +173,6 @@
 
               <div class="d-grid">
                 <button
-                  v-if="columnConfig.isMultiple"
                   type="button"
                   class="btn btn-success btn-sm"
                   style="padding: 0"

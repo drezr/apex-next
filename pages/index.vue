@@ -77,7 +77,10 @@
             )"
             :class="[
               `work-row-frame-${
-                columnConfig.isMultiple ? 'multiple' : 'single'
+                work.rows.filter((row) => row.name === columnConfig.name)
+                  .length > 1
+                  ? 'multiple'
+                  : 'single'
               }`,
               columnConfig.isClickable ? 'work-row-frame-clickable' : '',
             ]"
@@ -121,17 +124,15 @@ let columnConfigs: Array<ColumnConfig> = await $fetch(
 
 for (let work of works) {
   for (let config of columnConfigs) {
-    if (!config.isMultiple) {
-      let isRowFound = work.rows.find((row) => config.name == row.name)
+    let isRowFound = work.rows.find((row) => config.name == row.name)
 
-      if (!isRowFound) {
-        work.rows.push({
-          name: config.name,
-          value: '',
-          color: '',
-          position: 0,
-        })
-      }
+    if (!isRowFound) {
+      work.rows.push({
+        name: config.name,
+        value: '',
+        color: '',
+        position: 0,
+      })
     }
   }
 }
