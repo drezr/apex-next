@@ -15,6 +15,16 @@ const localisation = {
       nl: 'Réinitialiser',
       en: 'Réinitialiser',
     },
+    from: {
+      fr: 'De',
+      nl: 'De',
+      en: 'De',
+    },
+    to: {
+      fr: 'A',
+      nl: 'A',
+      en: 'A',
+    },
   },
   radium: {
     detailModal: {

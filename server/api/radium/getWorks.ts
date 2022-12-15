@@ -3,6 +3,9 @@ export default defineEventHandler((event) => {
     {
       id: 1,
       color: 'orange',
+      link: {
+        position: 0,
+      },
       rows: [
         {
           id: 1,
@@ -43,11 +46,30 @@ export default defineEventHandler((event) => {
           position: 0,
         },
       ],
-      limits: [],
+      limits: [
+        {
+          id: 1,
+          fromLine: '125',
+          fromStation: 'Huy',
+          fromLane: 'A',
+          fromSignal: 'KX3R45',
+          fromPK: '35000',
+          toLine: '125',
+          toStation: 'Statte',
+          toLane: 'A',
+          toSignal: 'HX3R45',
+          toPK: '36000',
+          color: 'blue',
+          position: 0,
+        },
+      ],
     },
     {
       id: 2,
       color: 'purple',
+      link: {
+        position: 1,
+      },
       rows: [
         {
           id: 1,
@@ -88,6 +110,16 @@ export default defineEventHandler((event) => {
           position: 0,
         },
       ],
+      limits: [],
+    },
+    {
+      id: 3,
+      color: null,
+      link: {
+        position: 2,
+      },
+      rows: [],
+      shifts: [],
       limits: [],
     },
   ]

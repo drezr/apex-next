@@ -109,6 +109,16 @@
               </label>
 
               <div v-if="columnConfig.name == 'shift'">
+                <div class="work-column-subtitles-frame">
+                  <div
+                    v-for="subColumn in columnConfig.subColumns"
+                    class="work-modal-subtitle"
+                    :style="`width: ${subColumn.width}%;`"
+                  >
+                    {{ _local(['radium', 'columnTitle', subColumn.name]) }}
+                  </div>
+                </div>
+
                 <div
                   v-for="shift in currentWork.shifts"
                   class="d-flex"
@@ -120,17 +130,19 @@
                   ></span>
 
                   <input
-                    class="form-control mb-1"
+                    class="form-control mb-1 text-center"
                     :value="_date.getWeek(shift.date)"
                     disabled
                   />
 
-                  <div class="form-control mb-1 mx-1 work-modal-date">
+                  <div
+                    class="form-control mb-1 mx-1 work-modal-date text-center"
+                  >
                     {{ _date.formatDatetimeNoYear(shift.date) }}
                   </div>
 
                   <div
-                    class="form-control mb-1"
+                    class="form-control mb-1 text-center"
                     contenteditable="true"
                     v-html="shift.schedule"
                     @blur="setField($event, shift, 'schedule')"
@@ -138,6 +150,84 @@
 
                   <ColorPicker
                     :parent="shift"
+                    class="mx-2"
+                    :top="-45"
+                    :left="-105"
+                    style="position: relative; top: -2px"
+                  />
+                </div>
+              </div>
+
+              <div v-if="columnConfig.name == 'limit'">
+                <div class="work-column-subtitles-frame">
+                  <div
+                    v-for="subColumn in columnConfig.subColumns.slice(0, 5)"
+                    class="work-modal-subtitle"
+                    :style="`width: ${subColumn.width * 2}%;`"
+                  >
+                    {{ _local(['radium', 'columnTitle', subColumn.name]) }}
+                  </div>
+                </div>
+
+                <div
+                  v-for="(limit, i) in currentWork.limits"
+                  class="d-flex"
+                  style="align-items: center"
+                  :style="
+                    i != currentWork.limits.length - 1
+                      ? 'border-bottom: 1px grey dashed; margin-bottom: 8px; padding-bottom: 4px;'
+                      : ''
+                  "
+                >
+                  <span
+                    v-html="_icon('arrows-expand', _color.pick('pink'), 25)"
+                    class="work-modal-drag"
+                  ></span>
+
+                  <div class="flex-grow-1">
+                    <div class="d-flex">
+                      <div
+                        v-for="(subColumn, i) in columnConfig.subColumns.slice(
+                          0,
+                          5
+                        )"
+                        class="mb-1"
+                        :style="`width: ${subColumn.width * 2}%;`"
+                        :class="i < 4 ? 'me-1' : ''"
+                      >
+                        <div
+                          class="form-control p-1 text-center"
+                          style="font-size: 13px"
+                          contenteditable="true"
+                          v-html="limit[subColumn.name as keyof WorkLimit]"
+                          @blur="setField($event, limit, subColumn.name)"
+                        ></div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex">
+                      <div
+                        v-for="(subColumn, i) in columnConfig.subColumns.slice(
+                          5,
+                          10
+                        )"
+                        class="mb-1"
+                        :style="`width: ${subColumn.width * 2}%;`"
+                        :class="i < 4 ? 'me-1' : ''"
+                      >
+                        <div
+                          class="form-control p-1 text-center"
+                          style="font-size: 13px"
+                          contenteditable="true"
+                          v-html="limit[subColumn.name as keyof WorkLimit]"
+                          @blur="setField($event, limit, subColumn.name)"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ColorPicker
+                    :parent="limit"
                     class="mx-2"
                     :top="-45"
                     :left="-105"
@@ -242,7 +332,7 @@ function addRow(rowName: string) {
     newShift.position = currentWork.value.shifts.length + 1
 
     currentWork.value.shifts.push(newShift)
-  } else if (rowName == 'limits') {
+  } else if (rowName == 'limit') {
     const newLimit = {} as WorkLimit
 
     newLimit.position = currentWork.value.limits.length + 1
@@ -299,5 +389,16 @@ watch(
 }
 .work-modal-nav {
   padding: 5px;
+}
+
+.work-column-subtitles-frame {
+  margin-left: 35px;
+  margin-right: 36px;
+  display: flex;
+}
+.work-modal-subtitle {
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
 }
 </style>

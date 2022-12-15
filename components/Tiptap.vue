@@ -183,6 +183,7 @@ $button-active-color: rgb(131, 189, 204);
   background-color: $button-active-color !important;
 }
 .action-buttons-frame {
+  min-width: 200px;
   background-color: white;
   border: 1px rgb(132, 165, 173) solid;
   border-radius: 5px;

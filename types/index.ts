@@ -42,6 +42,7 @@ declare global {
   interface Work {
     id?: number
     color: string
+    link: Object
     rows: Array<WorkRow>
     shifts: Array<WorkShift>
     limits: Array<WorkLimit>
