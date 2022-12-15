@@ -237,26 +237,20 @@ function resetWork() {
 
 function addRow(rowName: string) {
   if (rowName == 'shift') {
-    // create request to server, returns new WorkShift
-
     const newShift = {} as WorkShift
-    newShift.id = 1 // data from server
+
     newShift.position = currentWork.value.shifts.length + 1
 
     currentWork.value.shifts.push(newShift)
   } else if (rowName == 'limits') {
-    // create request to server, returns new WorkLimit
-
     const newLimit = {} as WorkLimit
-    newLimit.id = 1 // data from server
+
     newLimit.position = currentWork.value.limits.length + 1
 
     currentWork.value.limits.push(newLimit)
   } else {
-    // create request to server, returns new  WorkRow
-
     const newRow = {} as WorkRow
-    newRow.id = 1 // data from server
+
     newRow.name = rowName
     newRow.position =
       currentWork.value.rows.filter((r: WorkRow) => r.name == rowName).length +
