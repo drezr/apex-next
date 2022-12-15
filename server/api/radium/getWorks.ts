@@ -43,6 +43,7 @@ export default defineEventHandler((event) => {
           position: 0,
         },
       ],
+      limits: [],
     },
     {
       id: 2,
@@ -87,6 +88,7 @@ export default defineEventHandler((event) => {
           position: 0,
         },
       ],
+      limits: [],
     },
   ]
 })

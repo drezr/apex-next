@@ -176,6 +176,7 @@
                   type="button"
                   class="btn btn-success btn-sm"
                   style="padding: 0"
+                  @click="addRow(columnConfig.name)"
                 >
                   <span
                     v-html="_icon('plus', 'white', 20)"
@@ -234,6 +235,37 @@ function resetWork() {
   currentWork.value = JSON.parse(JSON.stringify(targetedWork))
 }
 
+function addRow(rowName: string) {
+  if (rowName == 'shift') {
+    // create request to server, returns new WorkShift
+
+    const newShift = {} as WorkShift
+    newShift.id = 1 // data from server
+    newShift.position = currentWork.value.shifts.length + 1
+
+    currentWork.value.shifts.push(newShift)
+  } else if (rowName == 'limits') {
+    // create request to server, returns new WorkLimit
+
+    const newLimit = {} as WorkLimit
+    newLimit.id = 1 // data from server
+    newLimit.position = currentWork.value.limits.length + 1
+
+    currentWork.value.limits.push(newLimit)
+  } else {
+    // create request to server, returns new  WorkRow
+
+    const newRow = {} as WorkRow
+    newRow.id = 1 // data from server
+    newRow.name = rowName
+    newRow.position =
+      currentWork.value.rows.filter((r: WorkRow) => r.name == rowName).length +
+      1
+
+    currentWork.value.rows.push(newRow)
+  }
+}
+
 function setField(event: any, parent: any, field: string) {
   parent[field] = event.target.innerHTML
 }
@@ -254,6 +286,7 @@ watch(
 }
 .work-modal-date {
   cursor: pointer;
+  height: 38px;
 }
 .work-modal-date:hover {
   background-color: rgb(250, 250, 250);

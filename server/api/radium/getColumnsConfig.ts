@@ -55,7 +55,7 @@ export default defineEventHandler((event) => {
       subColumns: [],
     },
     {
-      name: 'limits',
+      name: 'limit',
       position: 5,
       width: '600',
       isVisible: true,

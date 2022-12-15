@@ -122,17 +122,21 @@ let columnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'
 )
 
+const nonGenericRows = ['shift', 'limit']
+
 for (let work of works) {
   for (let config of columnConfigs) {
-    let isRowFound = work.rows.find((row) => config.name == row.name)
+    if (!nonGenericRows.includes(config.name)) {
+      let isRowFound = work.rows.find((row) => config.name == row.name)
 
-    if (!isRowFound) {
-      work.rows.push({
-        name: config.name,
-        value: '',
-        color: '',
-        position: 0,
-      })
+      if (!isRowFound) {
+        work.rows.push({
+          name: config.name,
+          value: '',
+          color: '',
+          position: 0,
+        })
+      }
     }
   }
 }
@@ -229,6 +233,7 @@ $inner-border-color: rgb(129, 129, 129);
   overflow-wrap: break-word;
   word-break: break-word;
   padding: 2px 5px;
+  min-height: 28px;
 }
 
 .work-shift-frame {
@@ -240,6 +245,7 @@ $inner-border-color: rgb(129, 129, 129);
 
 .work-shift-cell {
   text-align: center;
+  min-height: 21px;
 }
 
 .work-shift-cell:not(:last-child) {
