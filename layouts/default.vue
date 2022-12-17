@@ -31,28 +31,3 @@ const profile = useState<Profile>('profile', () => profileFetch)
   justify-content: space-between;
 }
 </style>
-
-<style>
-[data-title]:hover:after {
-  opacity: 1;
-  transition: all 0.5s;
-  visibility: visible;
-}
-[data-title]:after {
-  content: attr(data-title);
-  background-color: #2e2e2e;
-  color: white;
-  position: absolute;
-  padding: 1px 5px;
-  top: calc(-100% - 3px);
-  right: -50%;
-  white-space: nowrap;
-  opacity: 0;
-  border-radius: 3px;
-  z-index: 99999;
-  visibility: hidden;
-}
-[data-title] {
-  position: relative;
-}
-</style>

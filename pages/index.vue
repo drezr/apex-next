@@ -139,24 +139,24 @@ let columnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'
 )
 
-const nonGenericRows = ['shift', 'limit']
+// const nonGenericRows = ['shift', 'limit']
 
-for (let work of works) {
-  for (let config of columnConfigs) {
-    if (!nonGenericRows.includes(config.name)) {
-      let isRowFound = work.rows.find((row) => config.name == row.name)
+// for (let work of works) {
+//   for (let config of columnConfigs) {
+//     if (!nonGenericRows.includes(config.name)) {
+//       let isRowFound = work.rows.find((row) => config.name == row.name)
 
-      if (!isRowFound) {
-        work.rows.push({
-          name: config.name,
-          value: '',
-          color: '',
-          position: 0,
-        })
-      }
-    }
-  }
-}
+//       if (!isRowFound) {
+//         work.rows.push({
+//           name: config.name,
+//           value: '',
+//           color: '',
+//           position: 0,
+//         })
+//       }
+//     }
+//   }
+// }
 
 works = reactive(works)
 columnConfigs = reactive(columnConfigs)

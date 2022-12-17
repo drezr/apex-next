@@ -53,6 +53,11 @@ const localisation = {
         nl: 'Couleur du chantier',
         en: 'Couleur du chantier',
       },
+      addLine: {
+        fr: 'Ajouter une ligne',
+        nl: 'Ajouter une ligne',
+        en: 'Ajouter une ligne',
+      },
     },
     columnTitle: {
       description: {

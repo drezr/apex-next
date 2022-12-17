@@ -79,14 +79,7 @@
             tabindex="0"
           >
             <div class="d-flex justify-content-end">
-              <span
-                style="
-                  font-weight: bold;
-                  position: relative;
-                  top: 7px;
-                  left: -5px;
-                "
-              >
+              <span class="work-modal-work-color">
                 {{ _local(['radium', 'detailModal', 'workColor']) }}
               </span>
 
@@ -94,22 +87,45 @@
                 v-if="currentWork"
                 :parent="currentWork"
                 class="mx-2"
-                :top="-20"
+                :top="-10"
                 :left="-105"
-                style="position: relative; top: 10px"
+                style="position: relative; top: 3px"
               />
             </div>
 
-            <div v-for="columnConfig in columnConfigs" class="mb-3">
-              <label
-                class="form-label"
-                style="font-weight: bold; font-size: 18px"
-              >
-                {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
-              </label>
+            <div v-for="columnConfig in columnConfigs" class="mb-5">
+              <div class="d-flex align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-success btn-sm mx-2 work-modal-add-row"
+                  @click="addRow(columnConfig.name)"
+                >
+                  <span
+                    v-html="_icon('plus', 'white', 20)"
+                    style="position: relative; top: -3px"
+                  ></span>
+                </button>
+
+                <span
+                  v-html="_icon('stickies', _color.pick('grey'), 23)"
+                  class="work-modal-paste"
+                  style="position: relative; top: -4px"
+                  :class="false ? '' : 'work-modal-paste-disabled'"
+                ></span>
+
+                <label
+                  class="form-label"
+                  style="font-weight: bold; font-size: 18px"
+                >
+                  {{ _local(['radium', 'columnTitle', columnConfig.name]) }}
+                </label>
+              </div>
 
               <div v-if="columnConfig.name == 'shift'">
-                <div class="work-column-subtitles-frame">
+                <div
+                  class="work-column-subtitles-frame"
+                  v-if="currentWork.shifts.length > 0"
+                >
                   <div
                     v-for="subColumn in columnConfig.subColumns"
                     class="work-modal-subtitle"
@@ -150,26 +166,28 @@
                     :parent="shift"
                     class="mx-2"
                     :top="-45"
-                    :left="-105"
+                    :left="-60"
                     style="position: relative; top: 2px"
                   />
 
                   <span
                     v-html="_icon('clipboard', _color.pick('indigo'), 20)"
                     class="work-modal-command-button work-modal-copy"
-                    :data-title="_local(['common', 'copy'])"
                   ></span>
 
                   <span
                     v-html="_icon('trash', _color.pick('red'), 20)"
                     class="work-modal-command-button work-modal-copy"
-                    :data-title="_local(['common', 'delete'])"
+                    @click="deleteRow(shift, 'shift')"
                   ></span>
                 </div>
               </div>
 
               <div v-if="columnConfig.name == 'limit'">
-                <div class="work-column-subtitles-frame">
+                <div
+                  class="work-column-subtitles-frame"
+                  v-if="currentWork.limits.length > 0"
+                >
                   <div
                     v-for="subColumn in columnConfig.subColumns.slice(0, 5)"
                     class="work-modal-subtitle"
@@ -241,20 +259,19 @@
                       :parent="limit"
                       class="mx-2"
                       :top="-45"
-                      :left="-105"
+                      :left="-60"
                       style="position: relative; top: 2px"
                     />
 
                     <span
                       v-html="_icon('clipboard', _color.pick('indigo'), 20)"
                       class="work-modal-command-button work-modal-copy"
-                      :data-title="_local(['common', 'copy'])"
                     ></span>
 
                     <span
                       v-html="_icon('trash', _color.pick('red'), 20)"
                       class="work-modal-command-button work-modal-copy"
-                      :data-title="_local(['common', 'delete'])"
+                      @click="deleteRow(limit, 'limit')"
                     ></span>
                   </div>
                 </div>
@@ -279,45 +296,21 @@
                     :parent="row"
                     class="mx-2"
                     :top="-45"
-                    :left="-105"
+                    :left="-60"
                     style="position: relative; top: 2px"
                   />
 
                   <span
                     v-html="_icon('clipboard', _color.pick('indigo'), 20)"
                     class="work-modal-command-button work-modal-copy"
-                    :data-title="_local(['common', 'copy'])"
                   ></span>
 
                   <span
                     v-html="_icon('trash', _color.pick('red'), 20)"
                     class="work-modal-command-button work-modal-copy"
-                    :data-title="_local(['common', 'delete'])"
+                    @click="deleteRow(row, 'row')"
                   ></span>
                 </div>
-              </div>
-
-              <div class="d-flex">
-                <div class="d-grid flex-grow-1">
-                  <button
-                    type="button"
-                    class="btn btn-success btn-sm"
-                    style="padding: 0"
-                    @click="addRow(columnConfig.name)"
-                  >
-                    <span
-                      v-html="_icon('plus', 'white', 20)"
-                      style="position: relative; top: -2px"
-                    ></span>
-                  </button>
-                </div>
-
-                <span
-                  v-html="_icon('stickies', _color.pick('grey'), 28)"
-                  class="work-modal-paste"
-                  :class="false ? '' : 'work-modal-paste-disabled'"
-                  :data-title="false ? _local(['common', 'paste']) : null"
-                ></span>
               </div>
             </div>
           </div>
@@ -395,6 +388,16 @@ function addRow(rowName: string) {
   }
 }
 
+function deleteRow(row: WorkRow | WorkShift | WorkLimit, type: string) {
+  if (type == 'row') {
+    currentWork.value.rows = currentWork.value.rows.filter((r) => r != row)
+  } else if (type == 'shift') {
+    currentWork.value.shifts = currentWork.value.shifts.filter((r) => r != row)
+  } else if (type == 'limit') {
+    currentWork.value.limits = currentWork.value.limits.filter((r) => r != row)
+  }
+}
+
 function setField(event: any, parent: any, field: string) {
   parent[field] = event.target.innerHTML
 }
@@ -413,6 +416,20 @@ watch(
   border-bottom: 1px solid var(--bs-modal-header-border-color);
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
 }
+
+.work-modal-work-color {
+  font-weight: bold;
+  position: relative;
+  left: -5px;
+}
+
+.work-modal-add-row {
+  --bs-btn-padding-y: 0.1rem;
+  --bs-btn-padding-x: 0.3rem;
+  height: 25px;
+  position: relative;
+  top: -3px;
+}
 .work-modal-date {
   cursor: pointer;
   height: 38px;
@@ -427,6 +444,14 @@ watch(
 .work-modal-drag:active {
   cursor: grabbing;
 }
+
+.work-modal-command-button {
+  transition: filter 0.3s;
+}
+
+.work-modal-command-button:hover {
+  filter: brightness(2);
+}
 .work-modal-delete {
   cursor: pointer;
 }
@@ -436,7 +461,7 @@ watch(
 }
 .work-modal-paste {
   cursor: pointer;
-  margin-left: 4px;
+  margin-right: 10px;
 }
 .work-modal-paste-disabled {
   cursor: default;
