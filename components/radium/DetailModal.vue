@@ -121,7 +121,7 @@
 
                 <div
                   v-for="shift in currentWork.shifts"
-                  class="d-flex"
+                  class="d-flex mb-2"
                   style="align-items: center"
                 >
                   <span
@@ -130,19 +130,17 @@
                   ></span>
 
                   <input
-                    class="form-control mb-1 text-center"
+                    class="form-control text-center"
                     :value="_date.getWeek(shift.date)"
                     disabled
                   />
 
-                  <div
-                    class="form-control mb-1 mx-1 work-modal-date text-center"
-                  >
+                  <div class="form-control mx-1 work-modal-date text-center">
                     {{ _date.formatDatetimeNoYear(shift.date) }}
                   </div>
 
                   <div
-                    class="form-control mb-1 text-center"
+                    class="form-control text-center"
                     contenteditable="true"
                     v-html="shift.schedule"
                     @blur="setField($event, shift, 'schedule')"
@@ -153,8 +151,20 @@
                     class="mx-2"
                     :top="-45"
                     :left="-105"
-                    style="position: relative; top: -2px"
+                    style="position: relative; top: 2px"
                   />
+
+                  <span
+                    v-html="_icon('clipboard', _color.pick('indigo'), 20)"
+                    class="work-modal-command-button work-modal-copy"
+                    :data-title="_local(['common', 'copy'])"
+                  ></span>
+
+                  <span
+                    v-html="_icon('trash', _color.pick('red'), 20)"
+                    class="work-modal-command-button work-modal-copy"
+                    :data-title="_local(['common', 'delete'])"
+                  ></span>
                 </div>
               </div>
 
@@ -226,13 +236,27 @@
                     </div>
                   </div>
 
-                  <ColorPicker
-                    :parent="limit"
-                    class="mx-2"
-                    :top="-45"
-                    :left="-105"
-                    style="position: relative; top: -2px"
-                  />
+                  <div class="d-flex" style="position: relative; top: -2px">
+                    <ColorPicker
+                      :parent="limit"
+                      class="mx-2"
+                      :top="-45"
+                      :left="-105"
+                      style="position: relative; top: 2px"
+                    />
+
+                    <span
+                      v-html="_icon('clipboard', _color.pick('indigo'), 20)"
+                      class="work-modal-command-button work-modal-copy"
+                      :data-title="_local(['common', 'copy'])"
+                    ></span>
+
+                    <span
+                      v-html="_icon('trash', _color.pick('red'), 20)"
+                      class="work-modal-command-button work-modal-copy"
+                      :data-title="_local(['common', 'delete'])"
+                    ></span>
+                  </div>
                 </div>
               </div>
 
@@ -241,7 +265,7 @@
                   v-for="row in currentWork.rows.filter(
                     (row: WorkRow) => row.name === columnConfig.name
                   )"
-                  class="d-flex"
+                  class="d-flex mb-2"
                   style="align-items: center"
                 >
                   <span
@@ -249,30 +273,51 @@
                     class="work-modal-drag"
                   ></span>
 
-                  <Tiptap v-model="row.value" class="mb-2 flex-grow-1" />
+                  <Tiptap v-model="row.value" class="flex-grow-1" />
 
                   <ColorPicker
                     :parent="row"
                     class="mx-2"
                     :top="-45"
                     :left="-105"
-                    style="position: relative; top: -2px"
+                    style="position: relative; top: 2px"
                   />
+
+                  <span
+                    v-html="_icon('clipboard', _color.pick('indigo'), 20)"
+                    class="work-modal-command-button work-modal-copy"
+                    :data-title="_local(['common', 'copy'])"
+                  ></span>
+
+                  <span
+                    v-html="_icon('trash', _color.pick('red'), 20)"
+                    class="work-modal-command-button work-modal-copy"
+                    :data-title="_local(['common', 'delete'])"
+                  ></span>
                 </div>
               </div>
 
-              <div class="d-grid">
-                <button
-                  type="button"
-                  class="btn btn-success btn-sm"
-                  style="padding: 0"
-                  @click="addRow(columnConfig.name)"
-                >
-                  <span
-                    v-html="_icon('plus', 'white', 20)"
-                    style="position: relative; top: -2px"
-                  ></span>
-                </button>
+              <div class="d-flex">
+                <div class="d-grid flex-grow-1">
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm"
+                    style="padding: 0"
+                    @click="addRow(columnConfig.name)"
+                  >
+                    <span
+                      v-html="_icon('plus', 'white', 20)"
+                      style="position: relative; top: -2px"
+                    ></span>
+                  </button>
+                </div>
+
+                <span
+                  v-html="_icon('stickies', _color.pick('grey'), 28)"
+                  class="work-modal-paste"
+                  :class="false ? '' : 'work-modal-paste-disabled'"
+                  :data-title="false ? _local(['common', 'paste']) : null"
+                ></span>
               </div>
             </div>
           </div>
@@ -376,13 +421,25 @@ watch(
   background-color: rgb(250, 250, 250);
 }
 .work-modal-drag {
-  position: relative;
-  top: -4px;
   margin-right: 10px;
   cursor: grab;
 }
 .work-modal-drag:active {
   cursor: grabbing;
+}
+.work-modal-delete {
+  cursor: pointer;
+}
+.work-modal-copy {
+  cursor: pointer;
+  margin-right: 4px;
+}
+.work-modal-paste {
+  cursor: pointer;
+  margin-left: 4px;
+}
+.work-modal-paste-disabled {
+  cursor: default;
 }
 .modal-header {
   padding: 5px 5px 5px 15px;
@@ -393,7 +450,7 @@ watch(
 
 .work-column-subtitles-frame {
   margin-left: 35px;
-  margin-right: 36px;
+  margin-right: 80px;
   display: flex;
 }
 .work-modal-subtitle {

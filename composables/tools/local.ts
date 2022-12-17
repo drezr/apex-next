@@ -15,6 +15,21 @@ const localisation = {
       nl: 'Réinitialiser',
       en: 'Réinitialiser',
     },
+    delete: {
+      fr: 'Supprimer',
+      nl: 'Supprimer',
+      en: 'Supprimer',
+    },
+    copy: {
+      fr: 'Copier',
+      nl: 'Copier',
+      en: 'Copier',
+    },
+    paste: {
+      fr: 'Coller',
+      nl: 'Coller',
+      en: 'Coller',
+    },
     from: {
       fr: 'De',
       nl: 'De',
