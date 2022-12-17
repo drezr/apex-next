@@ -13,7 +13,7 @@ export default defineEventHandler((event) => {
     {
       name: 'note',
       position: 2,
-      width: '300',
+      width: '150',
       isVisible: true,
       isClickable: false,
       clickAction: null,
