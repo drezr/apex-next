@@ -59,10 +59,11 @@ export default defineEventHandler((event) => {
           toLane: 'A',
           toSignal: 'HX3R45',
           toPK: '36000',
-          color: 'blue',
+          color: 'purple',
           position: 0,
         },
       ],
+      parts: [],
     },
     {
       id: 2,
@@ -111,6 +112,7 @@ export default defineEventHandler((event) => {
         },
       ],
       limits: [],
+      parts: [],
     },
     {
       id: 3,
@@ -121,6 +123,7 @@ export default defineEventHandler((event) => {
       rows: [],
       shifts: [],
       limits: [],
+      parts: [],
     },
   ]
 })

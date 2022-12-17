@@ -39,6 +39,10 @@ declare global {
     position: number
   }
 
+  interface WorkPart {
+    id?: number
+  }
+
   interface Work {
     id?: number
     color: string
@@ -46,6 +50,7 @@ declare global {
     rows: Array<WorkRow>
     shifts: Array<WorkShift>
     limits: Array<WorkLimit>
+    parts: Array<WorkPart>
   }
 
   interface SubColumn {

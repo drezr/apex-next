@@ -70,6 +70,23 @@
           </div>
         </div>
 
+        <div v-if="columnConfig.name == 'limit'">
+          <div v-for="limit in work.limits">
+            <div
+              class="work-shift-frame"
+              :style="_color.pickBG(limit.color, 4)"
+            >
+              <div
+                v-for="subColumn in columnConfig.subColumns"
+                class="work-shift-cell"
+                :style="`width: ${subColumn.width}%;`"
+              >
+                {{ limit[subColumn.name as keyof WorkLimit] }}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div v-else style="flex-grow: 1">
           <div
             v-for="row in work.rows.filter(
