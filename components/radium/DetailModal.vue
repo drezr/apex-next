@@ -151,9 +151,25 @@
                     disabled
                   />
 
-                  <div class="form-control mx-1 work-modal-date text-center">
-                    {{ _date.formatDatetimeNoYear(shift.date) }}
-                  </div>
+                  <Datepicker
+                    v-model="shift.date"
+                    auto-apply
+                    locale="fr"
+                    :clearable="false"
+                    model-type="yyyy-MM-dd"
+                    week-numbers
+                    week-num-name=""
+                    :enable-time-picker="false"
+                    style="width: 100%; margin-right: 8px"
+                  >
+                    <template #trigger>
+                      <div
+                        class="form-control mx-1 work-modal-date text-center"
+                      >
+                        {{ _date.formatDatetimeNoYear(shift.date) }}
+                      </div>
+                    </template>
+                  </Datepicker>
 
                   <div
                     class="form-control text-center"
@@ -331,6 +347,9 @@
 </template>
 
 <script setup lang="ts">
+import Datepicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+
 let props = defineProps({
   works: {
     type: Array<Work>,

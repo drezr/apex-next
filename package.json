@@ -19,6 +19,7 @@
     "@tiptap/extension-underline": "*",
     "@tiptap/starter-kit": "*",
     "@tiptap/vue-3": "*",
+    "@vuepic/vue-datepicker": "^3.6.3",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.2"
   }

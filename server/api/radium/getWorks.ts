@@ -120,9 +120,41 @@ export default defineEventHandler((event) => {
       link: {
         position: 2,
       },
-      rows: [],
-      shifts: [],
-      limits: [],
+      rows: [
+        {
+          id: 5,
+          name: 'description',
+          value: 'Work description #5',
+          color: null,
+          position: 0,
+        },
+      ],
+      shifts: [
+        {
+          id: 1,
+          date: '2023-01-01',
+          schedule: '08-16',
+          color: null,
+          position: 0,
+        },
+      ],
+      limits: [
+        {
+          id: 1,
+          fromLine: '125',
+          fromStation: 'Huy',
+          fromLane: 'A',
+          fromSignal: 'KX3R45',
+          fromPK: '35000',
+          toLine: '125',
+          toStation: 'Statte',
+          toLane: 'A',
+          toSignal: 'HX3R45',
+          toPK: '36000',
+          color: 'red',
+          position: 0,
+        },
+      ],
       parts: [],
     },
   ]
