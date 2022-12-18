@@ -154,7 +154,7 @@
                   <Datepicker
                     v-model="shift.date"
                     auto-apply
-                    locale="fr"
+                    :locale="chosenLanguage"
                     :clearable="false"
                     model-type="yyyy-MM-dd"
                     week-numbers
@@ -166,7 +166,7 @@
                       <div
                         class="form-control mx-1 work-modal-date text-center"
                       >
-                        {{ _date.formatDatetimeNoYear(shift.date) }}
+                        {{ _date.formatDatetimeDayNameNoYear(shift.date) }}
                       </div>
                     </template>
                   </Datepicker>
@@ -364,6 +364,9 @@ let props = defineProps({
     default: [],
   },
 })
+
+const profile: Profile = useState<Profile>('profile').value
+const chosenLanguage: string = profile.chosenLanguage
 
 let currentWork = ref<Work>(JSON.parse(JSON.stringify(props.selectedWork)))
 
