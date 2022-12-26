@@ -4,6 +4,9 @@ declare global {
   interface Profile {
     id?: number
     name: string
+    role: string
+    rank: string
+    phone: string
     chosenLanguage: string
   }
 
@@ -39,8 +42,27 @@ declare global {
     position: number
   }
 
+  interface Team {
+    id?: number
+    name: string
+  }
+
+  interface PartParticipant {
+    id?: number
+    isAvailable: boolean
+    isParticipant: boolean
+  }
+
+  interface WorkParticipant {
+    id?: number
+    profile: Profile
+    partParticipant: PartParticipant
+  }
+
   interface WorkPart {
     id?: number
+    team: Team
+    participants: Array<WorkParticipant>
   }
 
   interface Work {

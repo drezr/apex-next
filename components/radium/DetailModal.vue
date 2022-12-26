@@ -338,7 +338,41 @@
             aria-labelledby="nav-profile-tab"
             tabindex="0"
           >
-            2
+            <div class="d-flex flex-wrap">
+              <div
+                v-for="part in currentWork.parts"
+                class="work-modal-part-frame"
+              >
+                <div class="work-modal-part-team-name">
+                  {{ part.team.name }}
+                </div>
+
+                <div
+                  v-for="participant in part.participants"
+                  class="work-modal-part-profile"
+                >
+                  <span
+                    class="work-modal-part-available"
+                    :class="
+                      participant.partParticipant.isAvailable
+                        ? 'work-modal-part-available-true'
+                        : 'work-modal-part-available-false'
+                    "
+                  ></span>
+
+                  <div>
+                    {{ participant.profile.name }}
+
+                    <span
+                      v-if="participant.profile.role"
+                      class="work-modal-part-profile-role"
+                    >
+                      {{ participant.profile.role }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -504,5 +538,55 @@ watch(
   font-size: 10px;
   font-weight: bold;
   text-align: center;
+}
+
+.work-modal-part-frame {
+  padding: 5px;
+  margin: 5px;
+  border: 1px rgb(202, 202, 202) solid;
+  border-radius: 3px;
+  box-shadow: 1px 2px 10px rgb(214, 214, 214);
+  width: calc(50% - 10px);
+}
+
+.work-modal-part-team-name {
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
+.work-modal-part-profile {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.work-modal-part-available {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  margin: 0 10px 0 5px;
+}
+
+.work-modal-part-available-true {
+  background-color: rgb(24, 185, 21);
+}
+
+.work-modal-part-available-false {
+  background-color: rgb(255, 3, 3);
+}
+
+.work-modal-part-profile-role {
+  font-size: 11px;
+  display: inline-block;
+  color: white;
+  background-color: rgb(134, 134, 134);
+  margin-left: 5px;
+  padding: 0 7px;
+  border-radius: 10px;
+  position: relative;
+  top: -1px;
 }
 </style>

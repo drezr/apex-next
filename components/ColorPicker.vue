@@ -6,7 +6,7 @@
         _color.pickBG(parent.color),
         `border-color : ${_color.pick(parent.color, -3)}`,
       ]"
-      @mouseover="isMouseOver = true"
+      @click="isMouseOver = true"
     >
       <span v-if="!parent.color" class="colorpicker-none"></span>
     </div>

@@ -63,7 +63,94 @@ export default defineEventHandler((event) => {
           position: 0,
         },
       ],
-      parts: [],
+      parts: [
+        {
+          id: 1,
+          description: 'Foo Bar Baz',
+          need: 'Need',
+          team: {
+            id: 1,
+            name: 'Sample Team',
+            profiles: [
+              {
+                id: 1,
+                name: 'Foo',
+                role: 'Foo role',
+                rank: 'Foo rank',
+                phone: '0490/12.34.56',
+                teamProfile: {
+                  id: 1,
+                  position: 0,
+                  team: 1,
+                  profile: 1,
+                },
+              },
+              {
+                id: 2,
+                name: 'Bar',
+                role: '',
+                rank: 'Bar rank',
+                phone: '0490/12.34.56',
+                teamProfile: {
+                  id: 2,
+                  position: 1,
+                  team: 1,
+                  profile: 2,
+                },
+              },
+              {
+                id: 3,
+                name: 'Baz',
+                role: 'Baz role',
+                rank: 'Baz rank',
+                phone: '0490/12.34.56',
+                teamProfile: {
+                  id: 3,
+                  position: 2,
+                  team: 1,
+                  profile: 3,
+                },
+              },
+            ],
+          },
+          participants: [
+            {
+              id: 1,
+              profile: {
+                id: 1,
+                name: 'Foo',
+                role: 'Foo role',
+                rank: 'Foo rank',
+                phone: '0490/12.34.56',
+              },
+              partParticipant: {
+                id: 1,
+                isAvailable: true,
+                isParticipant: true,
+                part: 1,
+                profile: 1,
+              },
+            },
+            {
+              id: 2,
+              profile: {
+                id: 2,
+                name: 'Bar',
+                role: '',
+                rank: 'Bar rank',
+                phone: '0490/12.34.56',
+              },
+              partParticipant: {
+                id: 2,
+                isAvailable: false,
+                isParticipant: true,
+                part: 1,
+                profile: 2,
+              },
+            },
+          ],
+        },
+      ],
     },
     {
       id: 2,

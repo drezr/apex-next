@@ -144,18 +144,6 @@
 </template>
 
 <script setup lang="ts">
-// import Datepicker from '@vuepic/vue-datepicker'
-// import '@vuepic/vue-datepicker/dist/main.css'
-
-// const date = ref(new Date())
-
-// const format = (date: Date) => {
-//   const month = date.toLocaleString('fr-fr', { month: 'long' })
-//   const year = date.getFullYear()
-
-//   return `${month[0].toUpperCase() + month.slice(1)} ${year}`
-// }
-
 let works: Array<Work> = await $fetch('/api/radium/getWorks')
 let columnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'
