@@ -144,6 +144,11 @@
 </template>
 
 <script setup lang="ts">
+// let { data: works } = await useFetch<Work[]>('/api/radium/getWorks')
+// let { data: columnConfigs } = await useFetch<ColumnConfig>(
+//   '/api/radium/getColumnsConfig'
+// )
+
 let works: Array<Work> = await $fetch('/api/radium/getWorks')
 let columnConfigs: Array<ColumnConfig> = await $fetch(
   '/api/radium/getColumnsConfig'

@@ -1,4 +1,14 @@
-export default defineEventHandler((event) => {
+//import _db from '~~/server/sequelize'
+
+export default defineEventHandler(async (event) => {
+  // try {
+  //   await _db.authenticate()
+  //   console.log('Connection has been established successfully.')
+  // } catch (error) {
+  //   console.error('Unable to connect to the database:', error)
+  // }
+
+  // console.log('ok')
   return [
     {
       id: 1,
