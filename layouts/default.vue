@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-const profileFetch: Profile = await $fetch('/api/common/getProfile')
+const profileFetch: Profile = await _fetch('/api/common/getProfile')
 const profile = useState<Profile>('profile', () => profileFetch)
 </script>
 

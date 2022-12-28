@@ -8,3 +8,4 @@ export { _date }
 
 export { getIcon as _icon } from './tools/icon'
 export { getLocal as _local } from './tools/local'
+export { useFetchWrapper as _fetch } from './tools/fetch'

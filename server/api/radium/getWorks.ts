@@ -7,8 +7,6 @@ export default defineEventHandler(async (event) => {
   // } catch (error) {
   //   console.error('Unable to connect to the database:', error)
   // }
-
-  // console.log('ok')
   return [
     {
       id: 1,
