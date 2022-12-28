@@ -10,18 +10,51 @@ declare global {
     chosenLanguage: string
   }
 
-  interface WorkRow {
+  interface Team {
     id?: number
     name: string
-    value: string
+  }
+
+  interface Work {
+    id?: number
     color: string
-    position: number
+    link: Object
+    rows: Array<WorkRow>
+    shifts: Array<WorkShift>
+    limits: Array<WorkLimit>
   }
 
   interface WorkShift {
     id?: number
     date: string
     schedule: string
+    color: string
+    position: number
+    parts: Array<ShiftPart>
+  }
+
+  interface ShiftPart {
+    id?: number
+    team: Team
+    participants: Array<PartParticipant>
+  }
+
+  interface PartParticipant {
+    id?: number
+    profile: Profile
+    partParticipant: PartParticipantLink
+  }
+
+  interface PartParticipantLink {
+    id?: number
+    isAvailable: boolean
+    isParticipant: boolean
+  }
+
+  interface WorkRow {
+    id?: number
+    name: string
+    value: string
     color: string
     position: number
   }
@@ -40,39 +73,6 @@ declare global {
     toPK: string
     color: string
     position: number
-  }
-
-  interface Team {
-    id?: number
-    name: string
-  }
-
-  interface PartParticipant {
-    id?: number
-    isAvailable: boolean
-    isParticipant: boolean
-  }
-
-  interface WorkParticipant {
-    id?: number
-    profile: Profile
-    partParticipant: PartParticipant
-  }
-
-  interface WorkPart {
-    id?: number
-    team: Team
-    participants: Array<WorkParticipant>
-  }
-
-  interface Work {
-    id?: number
-    color: string
-    link: Object
-    rows: Array<WorkRow>
-    shifts: Array<WorkShift>
-    limits: Array<WorkLimit>
-    parts: Array<WorkPart>
   }
 
   interface SubColumn {

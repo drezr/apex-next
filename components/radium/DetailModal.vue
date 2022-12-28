@@ -338,37 +338,36 @@
             aria-labelledby="nav-profile-tab"
             tabindex="0"
           >
-            <div class="d-flex flex-wrap">
-              <div
-                v-for="part in currentWork.parts"
-                class="work-modal-part-frame"
-              >
-                <div class="work-modal-part-team-name">
-                  {{ part.team.name }}
-                </div>
+            <div v-for="shift in currentWork.shifts">
+              <div class="d-flex flex-wrap">
+                <div v-for="part in shift.parts" class="work-modal-part-frame">
+                  <div class="work-modal-part-team-name">
+                    {{ part.team.name }}
+                  </div>
 
-                <div
-                  v-for="participant in part.participants"
-                  class="work-modal-part-profile"
-                >
-                  <span
-                    class="work-modal-part-available"
-                    :class="
-                      participant.partParticipant.isAvailable
-                        ? 'work-modal-part-available-true'
-                        : 'work-modal-part-available-false'
-                    "
-                  ></span>
-
-                  <div>
-                    {{ participant.profile.name }}
-
+                  <div
+                    v-for="participant in part.participants"
+                    class="work-modal-part-profile"
+                  >
                     <span
-                      v-if="participant.profile.role"
-                      class="work-modal-part-profile-role"
-                    >
-                      {{ participant.profile.role }}
-                    </span>
+                      class="work-modal-part-available"
+                      :class="
+                        participant.partParticipant.isAvailable
+                          ? 'work-modal-part-available-true'
+                          : 'work-modal-part-available-false'
+                      "
+                    ></span>
+
+                    <div>
+                      {{ participant.profile.name }}
+
+                      <span
+                        v-if="participant.profile.role"
+                        class="work-modal-part-profile-role"
+                      >
+                        {{ participant.profile.role }}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
