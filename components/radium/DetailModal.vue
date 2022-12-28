@@ -460,7 +460,7 @@ function setField(event: any, parent: any, field: string) {
 
 watch(
   () => props.selectedWork,
-  (newValue, oldValue) => {
+  () => {
     currentWork.value = JSON.parse(JSON.stringify(props.selectedWork))
   }
 )
