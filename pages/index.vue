@@ -124,7 +124,7 @@
 
     <!-- Detail Modal -->
 
-    <div
+    <!-- <div
       class="modal fade"
       id="detailModal"
       ref="detailModal"
@@ -139,12 +139,16 @@
         :selectedWork="selectedWork"
         :columnConfigs="columnConfigs"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
-let works: Work[] = await _fetch('/api/radium/getWorks')
+let works: Work[] = await _fetch('/api/radium/getWorks', {
+  appId: 1,
+  month: '01',
+  year: '2023',
+})
 let columnConfigs: ColumnConfig[] = await _fetch('/api/radium/getColumnsConfig')
 
 works = reactive(works)
