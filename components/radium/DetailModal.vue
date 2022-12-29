@@ -53,6 +53,7 @@
             >
               Informations
             </button>
+
             <button
               class="nav-link"
               id="nav-profile-tab"
@@ -338,37 +339,76 @@
             id="nav-profile"
             role="tabpanel"
             aria-labelledby="nav-profile-tab"
-            tabindex="0"
+            tabindex="1"
           >
-            <div v-for="shift in currentWork.shifts">
-              <div class="d-flex flex-wrap">
-                <div v-for="part in shift.parts" class="work-modal-part-frame">
-                  <div class="work-modal-part-team-name">
-                    {{ part.team.name }}
-                  </div>
-
-                  <div
-                    v-for="attendant in part.attendants"
-                    class="work-modal-part-profile"
+            <div class="tab-content" id="nav-shiftContent">
+              <nav>
+                <div
+                  class="nav nav-pills justify-content-center"
+                  id="shift-nav-tab"
+                  role="tablist"
+                >
+                  <button
+                    v-for="(shift, i) in currentWork.shifts"
+                    class="nav-link"
+                    :class="i == 0 ? 'active' : ''"
+                    :id="`nav-shift${shift.id}-tab`"
+                    data-bs-toggle="tab"
+                    :data-bs-target="`#nav-shift${shift.id}`"
+                    type="button"
+                    role="tab"
+                    :aria-controls="`nav-shift${shift.id}`"
+                    aria-selected="true"
                   >
-                    <span
-                      class="work-modal-part-available"
-                      :class="
-                        attendant.isAvailable
-                          ? 'work-modal-part-available-true'
-                          : 'work-modal-part-available-false'
-                      "
-                    ></span>
+                    {{ _date.formatDatetimeDayNameNoYear(shift.date) }} -
+                    {{ shift.schedule }}
+                  </button>
+                </div>
+              </nav>
 
-                    <div>
-                      {{ attendant.user.name }}
+              <div class="tab-content mt-4" id="nav-tabContent">
+                <div
+                  v-for="(shift, i) in currentWork.shifts"
+                  class="tab-pane fade"
+                  :class="i == 0 ? 'show active' : ''"
+                  :id="`nav-shift${shift.id}`"
+                  role="tabpanel"
+                  :aria-labelledby="`nav-shift${shift.id}-tab`"
+                  tabindex="0"
+                >
+                  <div class="d-flex flex-wrap">
+                    <div
+                      v-for="part in shift.parts"
+                      class="work-modal-part-frame"
+                    >
+                      <div class="work-modal-part-team-name">
+                        {{ part.team.name }}
+                      </div>
 
-                      <span
-                        v-if="attendant.user.role"
-                        class="work-modal-part-profile-role"
+                      <div
+                        v-for="attendant in part.attendants"
+                        class="work-modal-part-profile"
                       >
-                        {{ attendant.user.role }}
-                      </span>
+                        <span
+                          class="work-modal-part-available"
+                          :class="
+                            attendant.isAvailable
+                              ? 'work-modal-part-available-true'
+                              : 'work-modal-part-available-false'
+                          "
+                        ></span>
+
+                        <div>
+                          {{ attendant.user.name }}
+
+                          <span
+                            v-if="attendant.user.role"
+                            class="work-modal-part-profile-role"
+                          >
+                            {{ attendant.user.role }}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
