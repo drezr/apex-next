@@ -40,11 +40,11 @@
         </div>
         <div
           class="work-column-subtitles-frame"
-          v-if="columnConfig.subColumns.length > 0"
+          v-if="columnConfig.subColumnConfigs.length > 0"
           :style="_color.pickBG(work.color, 3)"
         >
           <div
-            v-for="subColumn in columnConfig.subColumns"
+            v-for="subColumn in columnConfig.subColumnConfigs"
             class="work-column-subtitle-cell"
             :style="`width: ${subColumn.width}%;`"
           >
@@ -60,19 +60,19 @@
             >
               <div
                 class="work-shift-cell"
-                :style="`width: ${columnConfig.subColumns[0].width}%;`"
+                :style="`width: ${columnConfig.subColumnConfigs[0].width}%;`"
               >
                 {{ _date.getWeek(shift.date) }}
               </div>
               <div
                 class="work-shift-cell"
-                :style="`width: ${columnConfig.subColumns[1].width}%;`"
+                :style="`width: ${columnConfig.subColumnConfigs[1].width}%;`"
               >
                 {{ _date.formatDatetimeNoYear(shift.date) }}
               </div>
               <div
                 class="work-shift-cell"
-                :style="`width: ${columnConfig.subColumns[2].width}%;`"
+                :style="`width: ${columnConfig.subColumnConfigs[2].width}%;`"
               >
                 {{ shift.schedule }}
               </div>
@@ -87,11 +87,11 @@
               :style="_color.pickBG(limit.color, 4)"
             >
               <div
-                v-for="subColumn in columnConfig.subColumns"
+                v-for="subColumn in columnConfig.subColumnConfigs"
                 class="work-shift-cell"
                 :style="`width: ${subColumn.width}%;`"
               >
-                {{ limit[subColumn.name as keyof WorkLimit] }}
+                {{ limit[subColumn.name as keyof Limit] }}
               </div>
             </div>
           </div>
@@ -124,7 +124,7 @@
 
     <!-- Detail Modal -->
 
-    <!-- <div
+    <div
       class="modal fade"
       id="detailModal"
       ref="detailModal"
@@ -139,7 +139,7 @@
         :selectedWork="selectedWork"
         :columnConfigs="columnConfigs"
       />
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -160,7 +160,7 @@ columnConfigs.sort(
   (a: ColumnConfig, b: ColumnConfig) => a.position - b.position
 )
 
-function onColumnClick(columnConfig: ColumnConfig, row: WorkRow) {
+function onColumnClick(columnConfig: ColumnConfig, row: Row) {
   if (columnConfig.clickAction == 'url') {
     window.open(columnConfig.clickValue + row.value, '_blank')
   }

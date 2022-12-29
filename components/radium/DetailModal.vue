@@ -127,7 +127,7 @@
                   v-if="currentWork.shifts.length > 0"
                 >
                   <div
-                    v-for="subColumn in columnConfig.subColumns"
+                    v-for="subColumn in columnConfig.subColumnConfigs"
                     class="work-modal-subtitle"
                     :style="`width: ${subColumn.width}%;`"
                   >
@@ -205,7 +205,10 @@
                   v-if="currentWork.limits.length > 0"
                 >
                   <div
-                    v-for="subColumn in columnConfig.subColumns.slice(0, 5)"
+                    v-for="subColumn in columnConfig.subColumnConfigs.slice(
+                      0,
+                      5
+                    )"
                     class="work-modal-subtitle"
                     :style="`width: ${subColumn.width * 2}%;`"
                   >
@@ -231,10 +234,9 @@
                   <div class="flex-grow-1">
                     <div class="d-flex">
                       <div
-                        v-for="(subColumn, i) in columnConfig.subColumns.slice(
-                          0,
-                          5
-                        )"
+                        v-for="(
+                          subColumn, i
+                        ) in columnConfig.subColumnConfigs.slice(0, 5)"
                         class="mb-1"
                         :style="`width: ${subColumn.width * 2}%;`"
                         :class="i < 4 ? 'me-1' : ''"
@@ -243,7 +245,7 @@
                           class="form-control p-1 text-center"
                           style="font-size: 13px"
                           contenteditable="true"
-                          v-html="limit[subColumn.name as keyof WorkLimit]"
+                          v-html="limit[subColumn.name as keyof Limit]"
                           @blur="setField($event, limit, subColumn.name)"
                         ></div>
                       </div>
@@ -251,10 +253,9 @@
 
                     <div class="d-flex">
                       <div
-                        v-for="(subColumn, i) in columnConfig.subColumns.slice(
-                          5,
-                          10
-                        )"
+                        v-for="(
+                          subColumn, i
+                        ) in columnConfig.subColumnConfigs.slice(5, 10)"
                         class="mb-1"
                         :style="`width: ${subColumn.width * 2}%;`"
                         :class="i < 4 ? 'me-1' : ''"
@@ -263,7 +264,7 @@
                           class="form-control p-1 text-center"
                           style="font-size: 13px"
                           contenteditable="true"
-                          v-html="limit[subColumn.name as keyof WorkLimit]"
+                          v-html="limit[subColumn.name as keyof Limit]"
                           @blur="setField($event, limit, subColumn.name)"
                         ></div>
                       </div>
@@ -296,7 +297,7 @@
               <div v-else>
                 <div
                   v-for="row in currentWork.rows.filter(
-                    (row: WorkRow) => row.name === columnConfig.name
+                    (row: Row) => row.name === columnConfig.name
                   )"
                   class="d-flex mb-2"
                   style="align-items: center"
@@ -346,26 +347,26 @@
                   </div>
 
                   <div
-                    v-for="participant in part.participants"
+                    v-for="attendant in part.attendants"
                     class="work-modal-part-profile"
                   >
                     <span
                       class="work-modal-part-available"
                       :class="
-                        participant.partParticipant.isAvailable
+                        attendant.isAvailable
                           ? 'work-modal-part-available-true'
                           : 'work-modal-part-available-false'
                       "
                     ></span>
 
                     <div>
-                      {{ participant.profile.name }}
+                      {{ attendant.user.name }}
 
                       <span
-                        v-if="participant.profile.role"
+                        v-if="attendant.user.role"
                         class="work-modal-part-profile-role"
                       >
-                        {{ participant.profile.role }}
+                        {{ attendant.user.role }}
                       </span>
                     </div>
                   </div>
@@ -398,7 +399,7 @@ let props = defineProps({
   },
 })
 
-const profile: Profile = useState<Profile>('profile').value
+const profile: User = useState<User>('profile').value
 const chosenLanguage: string = profile.chosenLanguage
 
 let currentWork = ref<Work>(JSON.parse(JSON.stringify(props.selectedWork)))
@@ -420,30 +421,29 @@ function resetWork() {
 
 function addRow(rowName: string) {
   if (rowName == 'shift') {
-    const newShift = {} as WorkShift
+    const newShift = {} as Shift
 
     newShift.position = currentWork.value.shifts.length + 1
 
     currentWork.value.shifts.push(newShift)
   } else if (rowName == 'limit') {
-    const newLimit = {} as WorkLimit
+    const newLimit = {} as Limit
 
     newLimit.position = currentWork.value.limits.length + 1
 
     currentWork.value.limits.push(newLimit)
   } else {
-    const newRow = {} as WorkRow
+    const newRow = {} as Row
 
     newRow.name = rowName
     newRow.position =
-      currentWork.value.rows.filter((r: WorkRow) => r.name == rowName).length +
-      1
+      currentWork.value.rows.filter((r: Row) => r.name == rowName).length + 1
 
     currentWork.value.rows.push(newRow)
   }
 }
 
-function deleteRow(row: WorkRow | WorkShift | WorkLimit, type: string) {
+function deleteRow(row: Row | Shift | Limit, type: string) {
   if (type == 'row') {
     currentWork.value.rows = currentWork.value.rows.filter((r) => r != row)
   } else if (type == 'shift') {

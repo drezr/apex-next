@@ -1,5 +1,5 @@
 export default class DateTools {
-  formatDatetimeNoYear(datetime: string | null) {
+  formatDatetimeNoYear(datetime: string | undefined | null) {
     /**
      * Returns datetime with the following format: DD/MM
      *
@@ -18,7 +18,7 @@ export default class DateTools {
     return null
   }
 
-  formatDatetimeDayNameNoYear(datetime: string | null) {
+  formatDatetimeDayNameNoYear(datetime: string | undefined | null) {
     /**
      * Returns day name and datetime with the following format: DAYNAME DD/MM
      *
@@ -26,7 +26,7 @@ export default class DateTools {
      */
 
     if (datetime) {
-      const profile: Profile = useState<Profile>('profile').value
+      const profile: User = useState<User>('profile').value
       const chosenLanguage: string = profile.chosenLanguage
 
       let [year, month, day] = datetime.split('-')
@@ -43,7 +43,7 @@ export default class DateTools {
     return null
   }
 
-  getWeek(datetime: string | null) {
+  getWeek(datetime: string | undefined | null) {
     if (datetime) {
       const date = new Date(datetime)
       date.setHours(0, 0, 0, 0)

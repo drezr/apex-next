@@ -8,7 +8,7 @@ export default defineEventHandler((event) => {
       isClickable: false,
       clickAction: null,
       clickValue: null,
-      subColumns: [],
+      subColumnConfigs: [],
     },
     {
       name: 'note',
@@ -18,7 +18,7 @@ export default defineEventHandler((event) => {
       isClickable: false,
       clickAction: null,
       clickValue: null,
-      subColumns: [],
+      subColumnConfigs: [],
     },
     {
       name: 'colt',
@@ -28,7 +28,7 @@ export default defineEventHandler((event) => {
       isClickable: true,
       clickAction: 'url',
       clickValue: 'https://google.be/search?q=',
-      subColumns: [],
+      subColumnConfigs: [],
     },
     {
       name: 'shift',
@@ -38,7 +38,7 @@ export default defineEventHandler((event) => {
       isClickable: false,
       clickAction: null,
       clickValue: null,
-      subColumns: [
+      subColumnConfigs: [
         { name: 'week', width: '33' },
         { name: 'date', width: '33' },
         { name: 'schedule', width: '34' },
@@ -52,7 +52,7 @@ export default defineEventHandler((event) => {
       isClickable: false,
       clickAction: null,
       clickValue: null,
-      subColumns: [],
+      subColumnConfigs: [],
     },
     {
       name: 'limit',
@@ -62,7 +62,7 @@ export default defineEventHandler((event) => {
       isClickable: false,
       clickAction: null,
       clickValue: null,
-      subColumns: [
+      subColumnConfigs: [
         { name: 'fromLine', width: '7' },
         { name: 'fromStation', width: '18' },
         { name: 'fromLane', width: '5' },
@@ -83,7 +83,7 @@ export default defineEventHandler((event) => {
       isClickable: false,
       clickAction: null,
       clickValue: null,
-      subColumns: [],
+      subColumnConfigs: [],
     },
     {
       name: 'supervisor',
@@ -93,7 +93,7 @@ export default defineEventHandler((event) => {
       isClickable: false,
       clickAction: null,
       clickValue: null,
-      subColumns: [],
+      subColumnConfigs: [],
     },
   ]
 })

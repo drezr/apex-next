@@ -309,7 +309,7 @@ export default class ColorTools {
     return color ? `${this.colors[color][lightness]}` : ''
   }
 
-  pickBG(color: string | null, lightness: number = 0) {
+  pickBG(color: string | null | undefined, lightness: number = 0) {
     /**
      * Returns desired background-color style
      *
