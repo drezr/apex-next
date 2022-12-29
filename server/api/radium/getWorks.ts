@@ -23,30 +23,10 @@ export default defineEventHandler(async (event) => {
       },
     },
     include: {
-      shifts: {
-        include: {
-          parts: {
-            include: {
-              team: {
-                include: {
-                  users: {
-                    include: {
-                      user: true,
-                    },
-                  },
-                },
-              },
-              attendants: {
-                include: {
-                  user: true,
-                },
-              },
-            },
-          },
-        },
-      },
+      shifts: true,
       rows: true,
       limits: true,
+      apps: true,
     },
   })
 

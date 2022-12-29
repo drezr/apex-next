@@ -70,7 +70,9 @@
       </div>
 
       <div class="modal-body">
-        <div class="tab-content" id="nav-tabContent" v-if="currentWork">
+        <div v-if="!currentWork">Loading</div>
+
+        <div class="tab-content" id="nav-tabContent" v-else>
           <div
             class="tab-pane fade show active"
             id="nav-home"
@@ -156,7 +158,6 @@
                     auto-apply
                     :locale="chosenLanguage"
                     :clearable="false"
-                    model-type="yyyy-MM-dd"
                     week-numbers
                     week-num-name=""
                     :enable-time-picker="false"

@@ -144,12 +144,25 @@
 </template>
 
 <script setup lang="ts">
+const appId = 1
+
 let works: Work[] = await _fetch('/api/radium/getWorks', {
   appId: 1,
   month: '01',
   year: '2023',
 })
 let columnConfigs: ColumnConfig[] = await _fetch('/api/radium/getColumnsConfig')
+
+works.sort((a: Work, b: Work) => {
+  const aApp = a.apps.find((app) => app.appId == appId)
+  const bApp = b.apps.find((app) => app.appId == appId)
+
+  if (aApp && bApp) {
+    return aApp.position - bApp.position
+  }
+
+  return 0
+})
 
 works = reactive(works)
 columnConfigs = reactive(columnConfigs)
@@ -166,8 +179,12 @@ function onColumnClick(columnConfig: ColumnConfig, row: Row) {
   }
 }
 
-function openDetailModal(work: Work) {
-  selectedWork.value = JSON.parse(JSON.stringify(work))
+async function openDetailModal(work: Work) {
+  let fetchedWork: Work = await _fetch('/api/radium/getWork', {
+    workId: work.id,
+  })
+
+  selectedWork.value = fetchedWork
 }
 </script>
 

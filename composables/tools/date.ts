@@ -7,7 +7,10 @@ export default class DateTools {
      */
 
     if (datetime) {
-      let [year, month, day] = datetime.split('-')
+      const date = new Date(datetime)
+
+      let day = String(date.getDate())
+      let month = String(date.getMonth() + 1)
 
       if (day.length == 1) day = '0' + day
       if (month.length == 1) month = '0' + month
@@ -29,15 +32,11 @@ export default class DateTools {
       const profile: User = useState<User>('profile').value
       const chosenLanguage: string = profile.chosenLanguage
 
-      let [year, month, day] = datetime.split('-')
-
-      if (day.length == 1) day = '0' + day
-      if (month.length == 1) month = '0' + month
-
       const date = new Date(datetime)
+      const dateNumber = this.formatDatetimeNoYear(datetime)
       const dayName = date.toLocaleString('fr-fr', { weekday: 'long' })
 
-      return `${dayName[0].toUpperCase() + dayName.slice(1)} ${day}/${month}`
+      return `${dayName[0].toUpperCase() + dayName.slice(1)} ${dateNumber}`
     }
 
     return null
