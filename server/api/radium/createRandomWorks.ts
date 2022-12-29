@@ -84,6 +84,7 @@ export default defineEventHandler(async (event) => {
         },
         shifts: {
           create: [
+            // @ts-ignore
             {
               date: shiftDate,
               schedule: '08-16',
@@ -104,6 +105,7 @@ export default defineEventHandler(async (event) => {
                 },
               },
             },
+            // @ts-ignore
             {
               date: shiftDate,
               schedule: '22-06',
