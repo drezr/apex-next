@@ -58,6 +58,21 @@ const localisation = {
         nl: 'Ajouter une ligne',
         en: 'Ajouter une ligne',
       },
+      informations: {
+        fr: 'Informations',
+        nl: 'Informations',
+        en: 'Informations',
+      },
+      participations: {
+        fr: 'Participations',
+        nl: 'Participations',
+        en: 'Participations',
+      },
+      demands: {
+        fr: 'Demandes',
+        nl: 'Demandes',
+        en: 'Demandes',
+      },
     },
     columnTitle: {
       description: {

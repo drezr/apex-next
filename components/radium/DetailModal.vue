@@ -43,28 +43,41 @@
           >
             <button
               class="nav-link active"
-              id="nav-home-tab"
+              id="nav-informations-tab"
               data-bs-toggle="tab"
-              data-bs-target="#nav-home"
+              data-bs-target="#nav-informations"
               type="button"
               role="tab"
-              aria-controls="nav-home"
+              aria-controls="nav-informations"
               aria-selected="true"
             >
-              Informations
+              {{ _local(['radium', 'detailModal', 'informations']) }}
             </button>
 
             <button
               class="nav-link"
-              id="nav-profile-tab"
+              id="nav-participations-tab"
               data-bs-toggle="tab"
-              data-bs-target="#nav-profile"
+              data-bs-target="#nav-participations"
               type="button"
               role="tab"
-              aria-controls="nav-profile"
+              aria-controls="nav-participations"
               aria-selected="false"
             >
-              Participations
+              {{ _local(['radium', 'detailModal', 'participations']) }}
+            </button>
+
+            <button
+              class="nav-link"
+              id="nav-participations-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-demands"
+              type="button"
+              role="tab"
+              aria-controls="nav-demands"
+              aria-selected="false"
+            >
+              {{ _local(['radium', 'detailModal', 'demands']) }}
             </button>
           </div>
         </nav>
@@ -76,9 +89,9 @@
         <div class="tab-content" id="nav-tabContent" v-else>
           <div
             class="tab-pane fade show active"
-            id="nav-home"
+            id="nav-informations"
             role="tabpanel"
-            aria-labelledby="nav-home-tab"
+            aria-labelledby="nav-informations-tab"
             tabindex="0"
           >
             <div class="d-flex justify-content-end">
@@ -336,9 +349,9 @@
 
           <div
             class="tab-pane fade"
-            id="nav-profile"
+            id="nav-participations"
             role="tabpanel"
-            aria-labelledby="nav-profile-tab"
+            aria-labelledby="nav-participations-tab"
             tabindex="1"
           >
             <div class="tab-content" id="nav-shiftContent">
@@ -360,8 +373,10 @@
                     :aria-controls="`nav-shift${shift.id}`"
                     aria-selected="true"
                   >
-                    {{ _date.formatDatetimeDayNameNoYear(shift.date) }} -
-                    {{ shift.schedule }}
+                    <small>
+                      {{ _date.formatDatetimeDayNameNoYear(shift.date) }} -
+                      {{ shift.schedule }}
+                    </small>
                   </button>
                 </div>
               </nav>
