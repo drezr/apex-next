@@ -7,179 +7,172 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id                Int           @id @default(autoincrement())
-  username          String        @unique
-  email             String        @unique
-  name              String
-  role              String?
-  rank              String?
-  phone             String?
-  chosenLanguage    String
+  id             Int     @id @default(autoincrement())
+  username       String  @unique
+  email          String  @unique
+  name           String
+  role           String?
+  rank           String?
+  phone          String?
+  chosenLanguage String
 
-  teams             TeamUser[]
-  attendings        Attendant[]
+  teams      TeamUser[]
+  attendings Attendant[]
 }
 
 model Circle {
-  id                Int           @id @default(autoincrement())
-  name              String
-  
-  teams             Team[]
+  id   Int    @id @default(autoincrement())
+  name String
+
+  teams Team[]
 }
 
 model Team {
-  id                Int           @id @default(autoincrement())
-  name              String
-  
-  circle            Circle        @relation(fields: [circleId], references: [id])
-  circleId          Int
-  apps              App[]
-  users             TeamUser[]
-  parts             Part[]
+  id   Int    @id @default(autoincrement())
+  name String
+
+  circle   Circle     @relation(fields: [circleId], references: [id])
+  circleId Int
+  apps     App[]
+  users    TeamUser[]
+  parts    Part[]
 }
 
 model App {
-  id                Int           @id @default(autoincrement())
-  name              String
-  
-  team              Team          @relation(fields: [teamId], references: [id])
-  teamId            Int
-  works             AppWork[]
-  columnConfigs     ColumnConfig[]
+  id   Int    @id @default(autoincrement())
+  name String
+
+  team          Team           @relation(fields: [teamId], references: [id])
+  teamId        Int
+  works         AppWork[]
+  columnConfigs ColumnConfig[]
 }
 
 model ColumnConfig {
-  id                Int           @id @default(autoincrement())
-  name              String
-  width             Int
-  isVisible         Boolean
-  isClickable       Boolean
-  clickAction       String
-  clickValue        String
-  position          Int
+  id          Int     @id @default(autoincrement())
+  name        String
+  width       Int
+  isVisible   Boolean
+  isClickable Boolean
+  clickAction String
+  clickValue  String
+  position    Int
 
-  app               App           @relation(fields: [appId], references: [id])
-  appId             Int
-  subColumnConfigs  SubColumnConfig[]
+  app              App               @relation(fields: [appId], references: [id])
+  appId            Int
+  subColumnConfigs SubColumnConfig[]
 }
 
 model SubColumnConfig {
-  id                Int           @id @default(autoincrement())
-  name              String
-  width             Int
-  position          Int
+  id       Int    @id @default(autoincrement())
+  name     String
+  width    Int
+  position Int
 
-  columnConfig      ColumnConfig  @relation(fields: [columnConfigId], references: [id])
-  columnConfigId    Int
+  columnConfig   ColumnConfig @relation(fields: [columnConfigId], references: [id])
+  columnConfigId Int
 }
 
 model Work {
-  id                Int           @id @default(autoincrement())
-  color             String?
-  date              DateTime      @db.Timestamp(6)
+  id    Int      @id @default(autoincrement())
+  color String?
+  date  DateTime @db.Timestamp(6)
 
-  apps              AppWork[]
-  rows              Row[]
-  limits            Limit[]
-  shifts            Shift[]
+  apps   AppWork[]
+  rows   Row[]
+  limits Limit[]
+  shifts Shift[]
 }
 
 model Row {
-  id                Int         @id @default(autoincrement())
-  name              String
-  value             String?
-  color             String?
-  position          Int
+  id       Int     @id @default(autoincrement())
+  name     String
+  value    String?
+  color    String?
+  position Int
 
-  work              Work        @relation(fields: [workId], references: [id], onDelete: Cascade)
-  workId            Int
+  work   Work @relation(fields: [workId], references: [id], onDelete: Cascade)
+  workId Int
 }
 
 model Limit {
-  id                Int         @id @default(autoincrement())
-  fromLine          String?
-  fromStation       String?
-  fromLane          String?
-  fromSignal        String?
-  fromPK            String?
-  toLine            String?
-  toStation         String?
-  toLane            String?
-  toSignal          String?
-  toPK              String?
-  color             String?
-  position          Int
+  id          Int     @id @default(autoincrement())
+  fromLine    String?
+  fromStation String?
+  fromLane    String?
+  fromSignal  String?
+  fromPK      String?
+  toLine      String?
+  toStation   String?
+  toLane      String?
+  toSignal    String?
+  toPK        String?
+  color       String?
+  position    Int
 
-  work              Work        @relation(fields: [workId], references: [id], onDelete: Cascade)
-  workId            Int
+  work   Work @relation(fields: [workId], references: [id], onDelete: Cascade)
+  workId Int
 }
 
 model Shift {
-  id                Int         @id @default(autoincrement())
-  date              String?
-  schedule          String?
-  color             String?
-  position          Int
+  id       Int     @id @default(autoincrement())
+  date     String?
+  schedule String?
+  color    String?
+  position Int
 
-  work              Work        @relation(fields: [workId], references: [id], onDelete: Cascade)
-  workId            Int
-  parts             Part[]
+  work   Work   @relation(fields: [workId], references: [id], onDelete: Cascade)
+  workId Int
+  parts  Part[]
 }
 
 model Part {
-  id                Int         @id @default(autoincrement())
-  need              String?
-  description       String?
+  id          Int     @id @default(autoincrement())
+  need        String?
+  description String?
 
-  shift             Shift       @relation(fields: [shiftId], references: [id], onDelete: Cascade)
-  shiftId           Int
-  team              Team        @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId            Int
-  attendants        Attendant[]
+  shift      Shift       @relation(fields: [shiftId], references: [id], onDelete: Cascade)
+  shiftId    Int
+  team       Team        @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId     Int
+  attendants Attendant[]
 }
 
 model Attendant {
-  id                Int         @id @default(autoincrement())
-  isAvailable       Boolean     @default(false)
-  isAttending       Boolean     @default(false)
+  id          Int     @id @default(autoincrement())
+  isAvailable Boolean @default(false)
+  isAttending Boolean @default(false)
 
-  part              Part        @relation(fields: [partId], references: [id], onDelete: Cascade)
-  partId            Int
+  part   Part @relation(fields: [partId], references: [id], onDelete: Cascade)
+  partId Int
 
-  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId            Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 }
-
-
-
 
 // Link tables
 
-
-
-
 model TeamUser {
-  id                Int         @id @default(autoincrement())
-  position          Int
+  id       Int @id @default(autoincrement())
+  position Int
 
-  team              Team        @relation(fields: [teamId], references: [id])
-  teamId            Int
-  user              User        @relation(fields: [userId], references: [id])
-  userId            Int
+  team   Team @relation(fields: [teamId], references: [id])
+  teamId Int
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
 
   @@unique([teamId, userId])
 }
 
 model AppWork {
-  id                Int         @id @default(autoincrement())
-  position          Int
+  id       Int @id @default(autoincrement())
+  position Int
 
-  app               App         @relation(fields: [appId], references: [id])
-  appId             Int
-  work              Work        @relation(fields: [workId], references: [id], onDelete: Cascade)
-  workId            Int
+  app    App  @relation(fields: [appId], references: [id])
+  appId  Int
+  work   Work @relation(fields: [workId], references: [id], onDelete: Cascade)
+  workId Int
 
   @@unique([appId, workId])
 }

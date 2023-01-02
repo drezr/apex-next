@@ -3,6 +3,9 @@ import prisma from '~/server/prisma'
 export default defineEventHandler(async (event) => {
   console.log('Creating random works...')
 
+  const app: App | any = await prisma.app.findFirst()
+  const user: User | any = await prisma.user.findFirst()
+
   const colors = [
     'red',
     'pink',
@@ -99,7 +102,7 @@ export default defineEventHandler(async (event) => {
                     create: {
                       isAvailable: true,
                       isAttending: true,
-                      userId: 1,
+                      userId: user.id,
                     },
                   },
                 },
@@ -120,7 +123,7 @@ export default defineEventHandler(async (event) => {
                     create: {
                       isAvailable: true,
                       isAttending: true,
-                      userId: 1,
+                      userId: user.id,
                     },
                   },
                 },
@@ -131,7 +134,7 @@ export default defineEventHandler(async (event) => {
         apps: {
           create: {
             position: parseInt(i),
-            appId: 1,
+            appId: app.id,
           },
         },
       },

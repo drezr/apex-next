@@ -3,6 +3,7 @@
     <div class="bar-frame">
       <div class="bar-content">
         <div>APEX</div>
+        <button @click="createRoot()">CreateRoot</button>
         <button @click="createRandomWorks()">CreateRandomWorks</button>
         <div>
           {{ profile.name }}
@@ -19,6 +20,10 @@
 <script setup lang="ts">
 const profileFetch: User = await _fetch('/api/common/getProfile')
 const profile = useState<User>('profile', () => profileFetch)
+
+async function createRoot() {
+  await _fetch('api/radium/createRoot')
+}
 
 async function createRandomWorks() {
   await _fetch('api/radium/createRandomWorks')
