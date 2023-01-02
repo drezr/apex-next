@@ -174,9 +174,13 @@ export const getLocal = (hierarchy: Array<string>) => {
   const chosenLanguage: string = profile.chosenLanguage
   let target: any = localisation
 
-  for (let item of hierarchy) {
-    target = target[item]
-  }
+  try {
+    for (let item of hierarchy) {
+      target = target[item]
+    }
 
-  return target[chosenLanguage]
+    return target[chosenLanguage]
+  } catch (e) {
+    return hierarchy[hierarchy.length - 1]
+  }
 }
