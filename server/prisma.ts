@@ -11,7 +11,6 @@
 // \q
 // Create .env file with DATABASE_URL=postgresql://myprojectuser:password@localhost:5432/myproject
 
-
 // Use these commands on schema changes
 // mkdir -p prisma/migrations/VERSIONNUMBER
 // npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/VERSIONNUMBER/migration.sql
