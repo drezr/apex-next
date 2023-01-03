@@ -1,8 +1,12 @@
 <template>
   <div>
     <Transition>
-      <div v-if="editor && showToolbar" style="position: relative">
-        <div class="action-buttons-frame" @click="keepToolbar = true">
+      <div
+        v-if="editor && showToolbar"
+        style="position: relative"
+        @click="keepToolbar = true"
+      >
+        <div class="action-buttons-frame">
           <ColorPicker
             :parent="{
               color: _color.reversePick(
@@ -10,8 +14,8 @@
               ),
             }"
             class="mx-2"
-            :top="-20"
-            :left="-105"
+            :top="-47"
+            :left="-60"
             style="position: relative; top: 7px"
             @update:color="onColorClick"
           />
@@ -133,7 +137,6 @@ watch(
 )
 
 function onActionClick(slug: string) {
-  keepToolbar.value = true
   const vm = editor.value.chain().focus()
   const actionTriggers: any = {
     bold: () => vm.toggleBold().run(),
@@ -149,7 +152,6 @@ function onActionClick(slug: string) {
 }
 
 function onHeadingClick(index: number) {
-  keepToolbar.value = true
   const vm = editor.value.chain().focus()
   vm.toggleHeading({ level: index }).run()
 }
@@ -158,6 +160,10 @@ function onColorClick(color: any) {
   const pickedColor = _color.pick(color)
 
   editor.value.chain().focus().setColor(pickedColor).run()
+
+  setTimeout(() => {
+    keepToolbar.value = false
+  }, 200)
 }
 
 function setShowToolbar(value: boolean, timeoutValue?: number) {
