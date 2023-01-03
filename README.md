@@ -69,6 +69,7 @@ npm run dev
 # TypeScript interfaces generator from Prisma schema
 
 Package is purposely not forked.
+
 Replace /node_modules/@kalissaac/prisma-typegen/lib/generateTypes.js createTypeFileContents function with the function below:
 
 ```
