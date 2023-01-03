@@ -6,6 +6,11 @@
 sudo apt update
 sudo apt install postgresql postgresql-contrib
 sudo -u postgres psql
+```
+
+Then run
+
+```bash
 CREATE DATABASE myproject;
 CREATE USER myprojectuser WITH PASSWORD 'password';
 ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
