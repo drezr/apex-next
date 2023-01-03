@@ -28,7 +28,7 @@ DATABASE_URL=postgresql://myprojectuser:password@localhost:5432/myproject
 
 ## Migrations
 
-Use these commands on schema changes
+Use these commands to setup the database and on every schema changes
 
 ```bash
 mkdir -p prisma/migrations/VERSIONNUMBER
