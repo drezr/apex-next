@@ -4,7 +4,7 @@
       <div
         v-if="editor && showToolbar"
         style="position: relative"
-        @click="keepToolbar = true"
+        @click="onFrameClick()"
       >
         <div class="action-buttons-frame">
           <ColorPicker
@@ -18,6 +18,7 @@
             :left="-60"
             style="position: relative; top: 7px"
             @update:color="onColorClick"
+            @click="keepToolbar = true"
           />
 
           <button
@@ -74,6 +75,7 @@ let textActions = [
   { slug: 'bold', icon: 'type-bold', active: 'bold' },
   { slug: 'italic', icon: 'type-italic', active: 'italic' },
   { slug: 'underline', icon: 'type-underline', active: 'underline' },
+  { slug: 'strike', icon: 'type-strikethrough', active: 'strike' },
   { slug: 'bulletList', icon: 'list-ul', active: 'bulletList' },
   { slug: 'orderedList', icon: 'list-ol', active: 'orderedList' },
   { slug: 'undo', icon: 'arrow-counterclockwise', active: 'undo' },
@@ -137,11 +139,14 @@ watch(
 )
 
 function onActionClick(slug: string) {
+  keepToolbar.value = true
+
   const vm = editor.value.chain().focus()
   const actionTriggers: any = {
     bold: () => vm.toggleBold().run(),
     italic: () => vm.toggleItalic().run(),
     underline: () => vm.toggleUnderline().run(),
+    strike: () => vm.toggleStrike().run(),
     bulletList: () => vm.toggleBulletList().run(),
     orderedList: () => vm.toggleOrderedList().run(),
     undo: () => vm.undo().run(),
@@ -152,6 +157,8 @@ function onActionClick(slug: string) {
 }
 
 function onHeadingClick(index: number) {
+  keepToolbar.value = true
+
   const vm = editor.value.chain().focus()
   vm.toggleHeading({ level: index }).run()
 }
@@ -160,6 +167,16 @@ function onColorClick(color: any) {
   const pickedColor = _color.pick(color)
 
   editor.value.chain().focus().setColor(pickedColor).run()
+
+  setTimeout(() => {
+    keepToolbar.value = false
+  }, 200)
+}
+
+function onFrameClick() {
+  keepToolbar.value = true
+
+  editor.value.chain().focus()
 
   setTimeout(() => {
     keepToolbar.value = false
