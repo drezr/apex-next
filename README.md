@@ -1,42 +1,97 @@
-# Nuxt 3 Minimal Starter
+# PostgreSQL setup
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
+## Use these commands to create PostgreSQL database on UNIX systems
 
 ```bash
-# yarn
-yarn install
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+sudo -u postgres psql
+CREATE DATABASE myproject;
+CREATE USER myprojectuser WITH PASSWORD 'password';
+ALTER ROLE myprojectuser SET client_encoding TO 'utf8';
+ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';
+ALTER ROLE myprojectuser SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
+\q
+```
 
-# npm
+## Create .env file at the root of the project with the following content
+
+```
+DATABASE_URL=postgresql://myprojectuser:password@localhost:5432/myproject
+```
+
+## Migrations
+
+Use these commands on schema changes
+
+```bash
+mkdir -p prisma/migrations/VERSIONNUMBER
+npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/VERSIONNUMBER/migration.sql
+npx prisma migrate resolve --applied VERSIONNUMBER
+npx prisma db push
+npx prisma generate
+```
+
+Or add this function to your .bashrc
+
+```bash
+pmigrate() {
+    mkdir -p prisma/migrations/$1
+    npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/$1/migration.sql
+    npx prisma migrate resolve --applied $1
+    npx prisma db push
+    npx prisma generate
+}
+```
+
+Run it with
+
+```bash
+source path/to/your/.bashrc
+pmigrate VERSIONNUMBER
+```
+
+# Nuxt 3 setup
+
+## Install the dependencies:
+
+```bash
 npm install
-
-# pnpm
-pnpm install --shamefully-hoist
 ```
 
 ## Development Server
-
-Start the development server on http://localhost:3000
 
 ```bash
 npm run dev
 ```
 
-## Production
+# TypeScript interfaces generator from Prisma schema
 
-Build the application for production:
+Package is purposely not forked.
+Replace /node_modules/@kalissaac/prisma-typegen/lib/generateTypes.js createTypeFileContents function with the function below:
 
-```bash
-npm run build
+```
+function createTypeFileContents(types, useType, generateInsertionTypes) {
+    let fileContents = `// AUTO GENERATED FILE BY @kalissaac/prisma-typegen
+// Use npx @kalissaac/prisma-typegen types prisma/schema.prisma to generate interfaces
+
+export {}
+
+declare global {${types.enums.map(prismaEnum => `  enum ${prismaEnum.name} {
+${prismaEnum.values.map(value => `${value} = '${value}',`).join('\n')}
+  }`).join('\n\n')}
+${types.models.map(model => `  ${useType ? 'type' : 'interface'} ${model.name} ${useType ? '= ' : ''}{
+${model.fields.map(field => createFieldLine(field, generateInsertionTypes)).join('\n')}
+  }`).join('\n\n')}
+}
+`;
+    return fileContents;
+}
 ```
 
-Locally preview production build:
+Then run this to generate interfaces:
 
 ```bash
-npm run preview
+npx @kalissaac/prisma-typegen types prisma/schema.prisma
 ```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
