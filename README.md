@@ -15,7 +15,7 @@ This will:
 - Install the Nuxt 3 project
 - Create a migration file, push the schema to the database and generate the Prisma client
 
-Or do it manually
+Or do it manually:
 
 # PostgreSQL setup
 
