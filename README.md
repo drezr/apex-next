@@ -1,7 +1,7 @@
 # Project setup
 
 ```bash
-sudo sh setup.sh db_name db_username db_password
+sudo sh setup.sh DB_NAME DB_USERNAME DB_PASSWORD
 ```
 
 This will:
