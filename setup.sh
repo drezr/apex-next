@@ -31,3 +31,4 @@ npx prisma db push
 npx prisma generate
 
 echo "Done !"
+echo "Run 'npm run dev' to launch developpement server"
