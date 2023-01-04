@@ -6,6 +6,15 @@ Run
 sudo sh setup.sh
 ```
 
+This will:
+
+- Install PostgreSQL
+- Start the service
+- Create a new database
+- Create an .env file with the database connexion informations
+- Install the Nuxt 3 project
+- Create a migration file, push the schema to the database and generate the Prisma client
+
 Or do it manually
 
 # PostgreSQL setup
