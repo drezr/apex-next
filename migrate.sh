@@ -5,3 +5,6 @@ npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma 
 npx prisma migrate resolve --applied $1
 npx prisma db push
 npx prisma generate
+
+npx @kalissaac/prisma-typegen types/generated.ts prisma/schema.prisma
+sed "s|export ||g" types/generated.ts > types/index.ts
