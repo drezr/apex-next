@@ -1,27 +1,21 @@
 #!/bin/bash
 
-read -p "Database name: " db_name
-read -p "Database username: " username
-read -s -p "Database password: " password
-printf "\n"
-
-
 sudo apt update
 sudo apt install postgresql postgresql-contrib
 sudo service postgresql start
 
-DB_CONNECTION="postgresql://$username:$password@localhost/postgres"
+DB_CONNECTION="postgresql://$2:$3@localhost/postgres"
 
-sudo -u postgres psql -c "CREATE USER $username WITH PASSWORD '$password';"
-sudo -u postgres psql -c "ALTER ROLE $username WITH CREATEDB;"
-sudo -u postgres psql -c "ALTER ROLE $username SET client_encoding TO 'utf8';"
-sudo -u postgres psql -c "ALTER ROLE $username SET default_transaction_isolation TO 'read committed';"
-sudo -u postgres psql -c "ALTER ROLE $username SET timezone TO 'UTC';"
-sudo -u postgres psql $DB_CONNECTION -c "CREATE DATABASE $db_name;"
-sudo -u postgres psql $DB_CONNECTION -c "GRANT ALL PRIVILEGES ON DATABASE $db_name TO $username;"
+sudo -u postgres psql -c "CREATE USER $2 WITH PASSWORD '$3';"
+sudo -u postgres psql -c "ALTER ROLE $2 WITH CREATEDB;"
+sudo -u postgres psql -c "ALTER ROLE $2 SET client_encoding TO 'utf8';"
+sudo -u postgres psql -c "ALTER ROLE $2 SET default_transaction_isolation TO 'read committed';"
+sudo -u postgres psql -c "ALTER ROLE $2 SET timezone TO 'UTC';"
+sudo -u postgres psql $DB_CONNECTION -c "CREATE DATABASE $1;"
+sudo -u postgres psql $DB_CONNECTION -c "GRANT ALL PRIVILEGES ON DATABASE $1 TO $2;"
 
 touch .env
-echo "DATABASE_URL=postgresql://$username:$password@localhost:5432/$db_name" > .env
+echo "DATABASE_URL=postgresql://$2:$3@localhost:5432/$1" > .env
 
 npm install
 
