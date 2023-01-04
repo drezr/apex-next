@@ -79,31 +79,8 @@ sh migrate.sh VERSIONNUMBER
 
 # TypeScript interfaces generator from Prisma schema
 
-Package is purposely not forked.
-
-Replace /node_modules/@kalissaac/prisma-typegen/lib/generateTypes.js createTypeFileContents function with the function below:
-
-```
-function createTypeFileContents(types, useType, generateInsertionTypes) {
-    let fileContents = `// AUTO GENERATED FILE BY @kalissaac/prisma-typegen
-// Use npx @kalissaac/prisma-typegen types prisma/schema.prisma to generate interfaces
-
-export {}
-
-declare global {${types.enums.map(prismaEnum => `  enum ${prismaEnum.name} {
-${prismaEnum.values.map(value => `${value} = '${value}',`).join('\n')}
-  }`).join('\n\n')}
-${types.models.map(model => `  ${useType ? 'type' : 'interface'} ${model.name} ${useType ? '= ' : ''}{
-${model.fields.map(field => createFieldLine(field, generateInsertionTypes)).join('\n')}
-  }`).join('\n\n')}
-}
-`;
-    return fileContents;
-}
-```
-
-Then run this to generate interfaces:
+Run this to generate interfaces:
 
 ```bash
-npx @kalissaac/prisma-typegen types prisma/schema.prisma
+sh geninterfaces.sh
 ```
