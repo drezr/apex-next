@@ -5,6 +5,7 @@ read -p "Database username: " username
 read -s -p "Database password: " password
 printf "\n"
 
+
 sudo apt update
 sudo apt install postgresql postgresql-contrib
 sudo service postgresql start
