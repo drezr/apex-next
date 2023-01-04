@@ -7,4 +7,4 @@ npx prisma db push
 npx prisma generate
 
 npx @kalissaac/prisma-typegen types/generated.ts prisma/schema.prisma
-sed "s|export ||g" types/generated.ts > types/index.ts
+sed -e "s|export ||g" -e "1,6d" -e "s|    |  |g" types/generated.ts > types/index.ts
