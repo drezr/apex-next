@@ -29,3 +29,5 @@ npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma 
 npx prisma migrate resolve --applied initial_0
 npx prisma db push
 npx prisma generate
+
+echo "Done !"
