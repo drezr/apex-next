@@ -2,7 +2,7 @@
 
 read -p "Database name: " db_name
 read -p "Database username: " username
-read -s -p "Database password: " password
+read -p "Database password: " password
 printf "\n"
 
 sudo apt update
