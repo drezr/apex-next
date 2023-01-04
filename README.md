@@ -71,23 +71,10 @@ npx prisma db push
 npx prisma generate
 ```
 
-Or add this function to your .bashrc
+Or run the migration script
 
 ```bash
-pmigrate() {
-    mkdir -p prisma/migrations/$1
-    npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/$1/migration.sql
-    npx prisma migrate resolve --applied $1
-    npx prisma db push
-    npx prisma generate
-}
-```
-
-Run it with
-
-```bash
-source path/to/your/.bashrc
-pmigrate VERSIONNUMBER
+sh migrate.sh VERSIONNUMBER
 ```
 
 # TypeScript interfaces generator from Prisma schema
