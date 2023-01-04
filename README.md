@@ -3,7 +3,7 @@
 Run
 
 ```bash
-sudo sh setup.sh
+sudo sh setup.sh db_name db_username db_password
 ```
 
 This will:
