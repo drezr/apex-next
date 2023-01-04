@@ -1,3 +1,13 @@
+# Project setup
+
+Run
+
+```bash
+sudo sh setup.sh
+```
+
+Or do it manually
+
 # PostgreSQL setup
 
 ## Use these commands to create PostgreSQL database on UNIX systems
@@ -26,7 +36,21 @@ GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;
 DATABASE_URL=postgresql://myprojectuser:password@localhost:5432/myproject
 ```
 
-## Migrations
+# Nuxt 3 setup
+
+## Install the dependencies:
+
+```bash
+npm install
+```
+
+## Development Server
+
+```bash
+npm run dev
+```
+
+# Migrations
 
 Use these commands to setup the database and on every schema changes
 
@@ -55,20 +79,6 @@ Run it with
 ```bash
 source path/to/your/.bashrc
 pmigrate VERSIONNUMBER
-```
-
-# Nuxt 3 setup
-
-## Install the dependencies:
-
-```bash
-npm install
-```
-
-## Development Server
-
-```bash
-npm run dev
 ```
 
 # TypeScript interfaces generator from Prisma schema
