@@ -1,5 +1,7 @@
 # Project setup
 
+On Debian based distros, run
+
 ```bash
 sudo sh setup.sh DB_NAME DB_USERNAME DB_PASSWORD
 ```
