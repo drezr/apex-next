@@ -1,17 +1,15 @@
 # Project setup
 
-On Debian based distros, run
+On GNU/Linux, run
 
 ```bash
-sudo sh setup.sh DB_NAME DB_USERNAME DB_PASSWORD
+sh setup.sh
 ```
 
 This will:
 
-- Install PostgreSQL
-- Start the service
 - Create a new database
-- Create a .env file with the database connexion informations
+- Create a .env file with the database path
 - Install the Nuxt 3 project
 - Create a migration file, push the schema to the database and generate the Prisma client
 
@@ -21,7 +19,7 @@ This will:
 npm run dev
 ```
 
-# PostgreSQL database migrations
+# Database migrations
 
 Run this to setup the database on every schema changes
 

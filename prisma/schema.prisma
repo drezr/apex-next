@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -77,7 +77,7 @@ model SubColumnConfig {
 model Work {
   id    Int      @id @default(autoincrement())
   color String?
-  date  DateTime @db.Timestamp(6)
+  date  DateTime @default(now())
 
   apps   AppWork[]
   rows   Row[]
