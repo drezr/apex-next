@@ -4,7 +4,6 @@
       <div class="bar-content">
         <div>APEX</div>
         <button @click="createRoot()">CreateRoot</button>
-        <button @click="createRandomWorks()">CreateRandomWorks</button>
         <div>
           {{ loggedUser.name }}
         </div>
@@ -23,10 +22,6 @@ const loggedUser = useState<User>('loggedUser', () => loggedUserFetch)
 
 async function createRoot() {
   await _fetch('api/radium/createRoot')
-}
-
-async function createRandomWorks() {
-  await _fetch('api/radium/createRandomWorks')
 }
 </script>
 

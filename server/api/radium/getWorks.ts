@@ -3,12 +3,9 @@ import prisma from '~/server/prisma'
 export default defineEventHandler(async (event) => {
   const params: any = getQuery(event)
 
-  const month: string = params.month
-  const year: string = params.year
   const appId: number = parseInt(params.appId)
-
-  const startDate = new Date(`${year}-${month}-01`)
-  const enDate = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 1)
+  const fromDate: Date = new Date(params.fromDate)
+  const toDate: Date = new Date(params.toDate)
 
   const works = await prisma.work.findMany({
     where: {
@@ -18,8 +15,8 @@ export default defineEventHandler(async (event) => {
         },
       },
       date: {
-        gte: startDate,
-        lte: enDate,
+        gte: fromDate,
+        lte: toDate,
       },
     },
     include: {
