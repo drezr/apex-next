@@ -3,36 +3,35 @@ import prisma from '~/server/prisma'
 export default defineEventHandler(async (event) => {
   console.log('Creating root...')
 
-
   await prisma.circle.create({
     data: {
-      name: 'Arrondissement 43',
+      name: 'Main Circle',
       teams: {
         create: {
-          name: 'Huy Signalisation',
+          name: 'Main Team',
           apps: {
             create: {
-              name: 'radium'
-            }
+              name: 'radium',
+            },
           },
           users: {
             create: {
               user: {
                 create: {
-                  username: 'HTQ8901',
-                  email: 'ronan.dumont@infrabel.be',
-                  name: 'Ronan Dumont',
-                  role: 'CTelm',
-                  rank: 'ARET',
+                  username: 'ABC123',
+                  email: 'admin.user@infrabel.be',
+                  name: 'Admin User',
+                  role: 'Role',
+                  rank: 'Rank',
                   chosenLanguage: 'fr',
-                }
+                },
               },
               position: 0,
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   })
 
   console.log('Done !')

@@ -17,11 +17,27 @@
 </template>
 
 <script setup lang="ts">
-const loggedUserFetch: User = await _fetch('/api/common/getLoggedUser')
+let loggedUserFetch: User = await _fetch('/api/common/getLoggedUser')
+
+// Used for developement - To be removed
+if (!loggedUserFetch) {
+  loggedUserFetch = {
+    id: 1,
+    username: 'ABC123',
+    email: 'admin.user@infrabel.be',
+    name: 'Admin User',
+    role: 'Role',
+    rank: 'Rank',
+    chosenLanguage: 'fr',
+    teams: [],
+    attendings: [],
+  }
+}
+
 const loggedUser = useState<User>('loggedUser', () => loggedUserFetch)
 
 async function createRoot() {
-  await _fetch('api/radium/createRoot')
+  await _fetch('/api/helpers/createRoot')
 }
 </script>
 

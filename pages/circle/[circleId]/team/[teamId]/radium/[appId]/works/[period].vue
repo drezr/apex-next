@@ -194,7 +194,7 @@ async function openDetailModal(work: Work) {
   selectedWork.value = fetchedWork
 }
 async function createRandomWorks() {
-  await _fetch('api/radium/createRandomWorks')
+  await _fetch('/api/helpers/createRandomWorks')
 }
 </script>
 
