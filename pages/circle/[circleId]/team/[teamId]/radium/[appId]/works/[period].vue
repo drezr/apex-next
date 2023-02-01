@@ -147,18 +147,21 @@
 
 <script setup lang="ts">
 const route = useRoute()
-const appId = Number(route.params.appId)
 
+const appId = Number(route.params.appId)
 const period = String(route.params.period)
 const fromDate = _date.swapFormat(period.split(':')[0])
 const toDate = _date.swapFormat(period.split(':')[1])
 
-let works: Work[] = await _fetch('/api/radium/getWorks', {
+const dataFetch = await _fetch('/api/radium/getWorks', {
   appId: 1,
   fromDate: fromDate,
   toDate: toDate,
 })
-let columnConfigs: ColumnConfig[] = await _fetch('/api/radium/getColumnsConfig')
+
+const app: App = dataFetch.app
+let works: Work[] = dataFetch.works
+let columnConfigs: ColumnConfig[] = dataFetch.columnConfigs
 
 works.sort((a: Work, b: Work) => {
   const aApp = a.apps.find((app) => app.appId == appId)
