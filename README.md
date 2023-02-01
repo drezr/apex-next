@@ -9,9 +9,7 @@ sh setup.sh
 This will:
 
 - Install the Nuxt 3 project
-- Create a new database
 - Create a .env file with the database path
-- Create a migration file, push the schema to the database and generate the Prisma client
 
 # Nuxt 3 Development Server
 
