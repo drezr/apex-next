@@ -29,8 +29,8 @@ export default class DateTools {
      */
 
     if (datetime) {
-      const profile: User = useState<User>('profile').value
-      const chosenLanguage: string = profile.chosenLanguage
+      const loggedUser: User = useState<User>('loggedUser').value
+      const chosenLanguage: string = loggedUser.chosenLanguage
 
       const date = new Date(datetime)
       const dateNumber = this.formatDatetimeNoYear(datetime)

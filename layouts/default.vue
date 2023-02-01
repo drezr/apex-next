@@ -6,7 +6,7 @@
         <button @click="createRoot()">CreateRoot</button>
         <button @click="createRandomWorks()">CreateRandomWorks</button>
         <div>
-          {{ profile.name }}
+          {{ loggedUser.name }}
         </div>
       </div>
     </div>
@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-const profileFetch: User = await _fetch('/api/common/getProfile')
-const profile = useState<User>('profile', () => profileFetch)
+const loggedUserFetch: User = await _fetch('/api/common/getLoggedUser')
+const loggedUser = useState<User>('loggedUser', () => loggedUserFetch)
 
 async function createRoot() {
   await _fetch('api/radium/createRoot')

@@ -185,8 +185,8 @@ const localisation = {
 }
 
 export const getLocal = (hierarchy: Array<string>) => {
-  const profile: User = useState<User>('profile').value
-  const chosenLanguage: string = profile.chosenLanguage
+  const loggedUser: User = useState<User>('loggedUser').value
+  const chosenLanguage: string = loggedUser.chosenLanguage
   let target: any = localisation
 
   try {

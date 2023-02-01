@@ -455,8 +455,8 @@ let props = defineProps({
   },
 })
 
-const profile: User = useState<User>('profile').value
-const chosenLanguage: string = profile.chosenLanguage
+const loggedUser: User = useState<User>('loggedUser').value
+const chosenLanguage: string = loggedUser.chosenLanguage
 
 let currentWork = ref<Work>(JSON.parse(JSON.stringify(props.selectedWork)))
 
