@@ -2,6 +2,20 @@ import prisma from '~/server/prisma'
 
 const columnConfigs = [
   {
+    name: 'shift',
+    position: 0,
+    width: '170',
+    isVisible: true,
+    isClickable: false,
+    clickAction: null,
+    clickValue: null,
+    subColumnConfigs: [
+      { name: 'week', width: '33' },
+      { name: 'date', width: '33' },
+      { name: 'schedule', width: '34' },
+    ],
+  },
+  {
     name: 'description',
     position: 1,
     width: '300',
@@ -30,20 +44,6 @@ const columnConfigs = [
     clickAction: 'url',
     clickValue: 'https://google.be/search?q=',
     subColumnConfigs: [],
-  },
-  {
-    name: 'shift',
-    position: 0,
-    width: '170',
-    isVisible: true,
-    isClickable: false,
-    clickAction: null,
-    clickValue: null,
-    subColumnConfigs: [
-      { name: 'week', width: '33' },
-      { name: 'date', width: '33' },
-      { name: 'schedule', width: '34' },
-    ],
   },
   {
     name: 'status',
