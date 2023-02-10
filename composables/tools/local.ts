@@ -1,5 +1,25 @@
 const localisation = {
   common: {
+    draft: {
+      fr: 'Draft',
+      nl: 'Draft',
+      en: 'Draft',
+    },
+    planner: {
+      fr: 'Planner',
+      nl: 'Planner',
+      en: 'Planner',
+    },
+    radium: {
+      fr: 'Radium',
+      nl: 'Radium',
+      en: 'Radium',
+    },
+    watcher: {
+      fr: 'Watcher',
+      nl: 'Watcher',
+      en: 'Watcher',
+    },
     save: {
       fr: 'Enregistrer',
       nl: 'Enregistrer',
@@ -39,6 +59,18 @@ const localisation = {
       fr: 'A',
       nl: 'A',
       en: 'A',
+    },
+  },
+  home: {
+    myTeams: {
+      fr: 'Mes équipes',
+      nl: 'Mes équipes',
+      en: 'Mes équipes',
+    },
+    myCircles: {
+      fr: 'Mes cercles',
+      nl: 'Mes cercles',
+      en: 'Mes cercles',
     },
   },
   radium: {

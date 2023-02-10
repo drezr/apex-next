@@ -16,6 +16,7 @@ model User {
   rank           String?
   phone          String?
   chosenLanguage String
+  isAdmin        Boolean @default(false)
 
   teams      TeamUser[]
   attendings Attendant[]

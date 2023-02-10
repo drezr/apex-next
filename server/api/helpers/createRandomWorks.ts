@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
   for (const i in colors) {
     let shiftDate = new Date(
-      `2023-01-${
+      `2023-02-${
         parseInt(i) < 9
           ? '0' + String(parseInt(i) + 1)
           : String(parseInt(i) + 1)
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
     await prisma.work.create({
       data: {
         color: colors[Math.floor(Math.random() * colors.length)],
-        date: new Date('2023-01-01'),
+        date: new Date('2023-02-01'),
         rows: {
           create: [
             {

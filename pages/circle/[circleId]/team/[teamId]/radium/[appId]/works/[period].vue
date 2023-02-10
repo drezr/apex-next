@@ -142,6 +142,7 @@
     </div>
 
     <button @click="createRandomWorks()">CreateRandomWorks</button>
+    <button @click="removeAllWorks()">RemoveAllWorks</button>
   </div>
 </template>
 
@@ -196,8 +197,15 @@ async function openDetailModal(work: Work) {
 
   selectedWork.value = fetchedWork
 }
+
 async function createRandomWorks() {
   await _fetch('/api/helpers/createRandomWorks')
+  window.location.reload()
+}
+
+async function removeAllWorks() {
+  await _fetch('/api/helpers/removeAllWorks')
+  window.location.reload()
 }
 </script>
 

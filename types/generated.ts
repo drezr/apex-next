@@ -13,6 +13,7 @@ export interface User {
     rank?: string,
     phone?: string,
     chosenLanguage: string,
+    isAdmin: boolean,
     teams: TeamUser[],
     attendings: Attendant[],
 }

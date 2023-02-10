@@ -24,6 +24,40 @@ export default defineEventHandler(async (event) => {
                   role: 'Role',
                   rank: 'Rank',
                   chosenLanguage: 'fr',
+                  isAdmin: true,
+                },
+              },
+              position: 0,
+            },
+          },
+        },
+      },
+    },
+  })
+
+
+  await prisma.circle.create({
+    data: {
+      name: 'Secondary Circle',
+      teams: {
+        create: {
+          name: 'Secondary Team',
+          apps: {
+            create: {
+              name: 'radium',
+            },
+          },
+          users: {
+            create: {
+              user: {
+                create: {
+                  username: 'DEF456',
+                  email: 'random.user@infrabel.be',
+                  name: 'Random User',
+                  role: 'Role',
+                  rank: 'Rank',
+                  chosenLanguage: 'fr',
+                  isAdmin: false,
                 },
               },
               position: 0,
