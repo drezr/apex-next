@@ -1,6 +1,6 @@
 #!/bin/bash
 
-npm i
+npm install
 touch .env
 echo "DATABASE_URL=\"file:./dev.db\"" > .env
 
